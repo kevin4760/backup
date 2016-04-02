@@ -18,6 +18,7 @@ public class BedAndBreakfast {
         // TODO code application logic here
         System.out.println("Hello World!");
         System.out.println("something else");
+        System.out.println("New World by Aaron Coffman");
     }
     
 }
