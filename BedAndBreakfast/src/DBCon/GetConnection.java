@@ -23,13 +23,13 @@ public class GetConnection {
     //keep this empty
     }
     
-    public void getDBConnection() {
-        try {
-            Connection conn = DriverManager.getConnection(URL);
-            out.println("DB Connection Made");
-        } catch(SQLException ex) {
-            out.println(ex);
-            out.println("did not connect to DB");
-        }
-    }
+    //public void getDBConnection() {
+    //    try {
+    //        Connection conn = DriverManager.getConnection(URL);
+    //       out.println("DB Connection Made");
+    //    } catch(SQLException ex) {
+    //        out.println(ex);
+    //        out.println("did not connect to DB");
+    //    }
+    //}
 }
