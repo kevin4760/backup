@@ -17,7 +17,7 @@ import java.sql.*;
 public class GetConnection {
     
     //this string is broke into these "jdbc:oracle:thin:username:passowrd@location:port:databasename
-    //private String URL = "jdbc:oracle:thin:system/fail1982@localhost:1521:xe";
+    private String URL = "jdbc:oracle:thin:system/fail1982@localhost:1521:xe";
     
     public GetConnection() {
     //keep this empty
