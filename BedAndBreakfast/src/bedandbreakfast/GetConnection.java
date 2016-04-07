@@ -17,7 +17,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * creates a DB Connection for the specific database in the String 
  * URL.  This connection string must be manually changed as of right now
  */
-public class GetConnection {
+public class GetConnection{
     private Connection conn;
 //    private Properties connectionProps;
     private String username;
@@ -26,6 +26,8 @@ public class GetConnection {
     private String server;
     private int port;
     private String URL;
+    private Statement stmt;
+    private ResultSet rs;
     
     public GetConnection(String username, String password, String schema, String server, int port) {
         this.username = username;
@@ -54,7 +56,23 @@ public class GetConnection {
         }
     }
     
-//    public ArrayList <String> runquery(String query){
-//
-//    }
+    public ArrayList runquery(String query){
+        ArrayList records = new ArrayList();
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()){
+                //rs.getType();
+                //int size = rs.getFetchSize();
+                int size = 1;
+                System.out.println(size);
+                for (int i = 1; i <= size; i++){
+                    records.add(rs.getString(i));
+                }
+            }
+        } catch (SQLException ex) {
+            showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return records;
+    }
 }
