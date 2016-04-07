@@ -7,6 +7,8 @@ package bedandbreakfast;
 
 import java.util.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -56,22 +58,26 @@ public class GetConnection{
         }
     }
     
-    public ArrayList runquery(String query){
+    public ArrayList runquery(String query, int column_size){
         ArrayList records = new ArrayList();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()){
-                //rs.getType();
-                //int size = rs.getFetchSize();
-                int size = 1;
-                System.out.println(size);
-                for (int i = 1; i <= size; i++){
+                for (int i = 1; i <= column_size; i++){
                     records.add(rs.getString(i));
                 }
+                rs.close();
             }
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                }
+            }
         }
         return records;
     }
