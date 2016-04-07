@@ -23,7 +23,7 @@ public class BedAndBreakfast {
         System.out.println("New World by Aaron Coffman");
         GetConnection db1 = new GetConnection ("opera","opera","opera","ssut",1521);
         db1.getDBConnection();
-        ArrayList results = db1.runquery("select resort from resort");
+        ArrayList results = db1.runquery("select * from resort where resort = 'MID'", 5);
         System.out.println(results);
     }
     
