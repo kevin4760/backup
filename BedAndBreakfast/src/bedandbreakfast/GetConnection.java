@@ -58,17 +58,17 @@ public class GetConnection{
         }
     }
     
-    public ArrayList runquery(String query, int column_size){
+    public ArrayList getresults(String query, int column_size){
         ArrayList records = new ArrayList();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()){
-                for (int i = 1; i <= column_size; i++){
+                for (int i = 1; i < column_size; i++){
                     records.add(rs.getString(i));
-                }
-                rs.close();
+                }                
             }
+            rs.close();
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
