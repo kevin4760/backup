@@ -5,6 +5,8 @@
  */
 package bedandbreakfast;
 
+import java.util.*;
+
 /**
  *
  * @author prasasin
@@ -18,6 +20,11 @@ public class BedAndBreakfast {
         // TODO code application logic here
         System.out.println("Hello World!");
         System.out.println("something else");
+        System.out.println("New World by Aaron Coffman");
+        GetConnection db1 = new GetConnection ("opera","opera","opera","ssut",1521);
+        db1.getDBConnection();
+        ArrayList results = db1.getresults("select * from resort where resort = 'MID'", 5);
+        System.out.println(results);
     }
     
 }
