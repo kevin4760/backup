@@ -11,8 +11,9 @@ DROP TABLE rooms CASCADE CONSTRAINTS;
 CREATE TABLE rooms (
   rm_no VARCHAR2(5),
   use_count NUMERIC(8,2),
-  rooms INTEGER,
+  beds NUMBER(2),
   hotel_id VARCHAR2(10),
+  clean NUMBER(1),
   PRIMARY KEY (rm_no),
   CONSTRAINT rooms_fk 
     FOREIGN KEY(hotel_id) REFERENCES hotels(hotel_id)  
@@ -36,10 +37,8 @@ CREATE TABLE guests (
   guest_no VARCHAR2(10),
   last_name VARCHAR2(50),
   first_name VARCHAR2(50),
-  hotel_id VARCHAR2(10),
-  PRIMARY KEY (guest_no),
-  CONSTRAINT guests_fk
-    FOREIGN KEY(hotel_id) REFERENCES hotels(hotel_id)
+  title VARCHAR2(5),
+  PRIMARY KEY (guest_no)
   );
   
 DROP TABLE reservations CASCADE CONSTRAINTS;
