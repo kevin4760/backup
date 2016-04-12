@@ -6,6 +6,7 @@
 package views;
 
 import DBCommands.GetConnection;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -19,6 +20,7 @@ public class Login1 extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+ 
     public Login1() {
         initComponents();
     }
@@ -130,12 +132,12 @@ public class Login1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
-        // check password
+        // validates username and password moves to reservation screen
         GetConnection gc = new GetConnection(5);
         gc.getDBConnection();
         System.out.println(gc.validateUser(username.getText(), password.getText()));
         if(gc.validateUser(username.getText(), password.getText())){
-            new ReservationPage().setVisible(rootPaneCheckingEnabled);
+            new Dashboard().setVisible(rootPaneCheckingEnabled);
             this.setVisible(false);
         } else
             showMessageDialog(null, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);

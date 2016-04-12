@@ -52,7 +52,9 @@ public class GetConnection{
             this.server = "localhost";
             this.port = 1521;
         }
-    }//end constructors
+        //you can add an if interger statement for yours
+    }
+    //end constructors
     
     //getters
     public Connection getConn() {
@@ -142,4 +144,5 @@ public class GetConnection{
         }
         return records;
     }//getResults()
+    
 }
