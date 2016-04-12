@@ -5,6 +5,8 @@
  */
 package views;
 
+import DBCommands.GetConnection;
+
 /**
  *
  * @author Aaron
@@ -29,12 +31,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
+        reservation = new javax.swing.JButton();
+        guestSearch = new javax.swing.JButton();
+        reservationSearch = new javax.swing.JButton();
+        roomSearch = new javax.swing.JButton();
+        employee = new javax.swing.JButton();
+        exitProgram = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -48,7 +50,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        roomList = new javax.swing.JList();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -58,6 +60,13 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,18 +76,43 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Main Menu");
 
-        jButton1.setText("Reservation");
-        jButton1.setToolTipText("Takes you to the reservation page.");
+        reservation.setText("Reservation");
+        reservation.setToolTipText("Takes you to the reservation page.");
+        reservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Guest Seach");
+        guestSearch.setText("Guest Seach");
+        guestSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guestSearchActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Reservation Search");
+        reservationSearch.setText("Reservation Search");
+        reservationSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationSearchActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Room Search");
+        roomSearch.setText("Room Search");
+        roomSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomSearchActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Employee");
+        employee.setText("Employee");
 
-        jButton28.setText("Exit Program");
+        exitProgram.setText("Exit Program");
+        exitProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitProgramActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,12 +122,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(exitProgram, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(guestSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roomSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reservationSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(employee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -101,17 +135,17 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(reservation)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(guestSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(reservationSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(roomSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(employee)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton28)
+                .addComponent(exitProgram)
                 .addContainerGap())
         );
 
@@ -177,17 +211,18 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+        roomList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "120", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        roomList.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jList1PropertyChange(evt);
+                roomListPropertyChange(evt);
             }
         });
-        jScrollPane5.setViewportView(jList1);
+        jScrollPane5.setViewportView(roomList);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Rooms");
@@ -271,6 +306,46 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Menu");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setText("DashBoard");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem2.setText("Reservations");
+        jMenu1.add(jMenuItem2);
+
+        jMenu3.setText("Search");
+
+        jMenuItem4.setText("Guest");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuItem3.setText("Reservation");
+        jMenu3.add(jMenuItem3);
+
+        jMenuItem5.setText("Room");
+        jMenu3.add(jMenuItem5);
+
+        jMenu1.add(jMenu3);
+
+        jMenuItem6.setText("Value Check");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Options");
@@ -301,9 +376,55 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jList1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jList1PropertyChange
+    private void roomListPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_roomListPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_jList1PropertyChange
+    }//GEN-LAST:event_roomListPropertyChange
+
+    private void reservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationActionPerformed
+        // moves view to reservationpage, hides dashboard
+        new ReservationPage().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_reservationActionPerformed
+
+    private void guestSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestSearchActionPerformed
+        // moves view to GuestSearchModule, hides dashboard
+        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_guestSearchActionPerformed
+
+    private void reservationSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationSearchActionPerformed
+        // moves view to reservationSearchModule, hides dashboard
+        new ReservationSearchModule().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_reservationSearchActionPerformed
+
+    private void exitProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitProgramActionPerformed
+        // exit program
+        System.exit(0);
+    }//GEN-LAST:event_exitProgramActionPerformed
+
+    private void roomSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomSearchActionPerformed
+        // moves view to roomSearchModule, hides dashboard
+        new RoomManagementModule().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_roomSearchActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new Dashboard().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        new GuestSearchModule().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,12 +462,9 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton employee;
+    private javax.swing.JButton exitProgram;
+    private javax.swing.JButton guestSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -355,10 +473,16 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -373,5 +497,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JButton reservation;
+    private javax.swing.JButton reservationSearch;
+    private javax.swing.JList roomList;
+    private javax.swing.JButton roomSearch;
     // End of variables declaration//GEN-END:variables
 }
