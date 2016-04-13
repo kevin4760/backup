@@ -146,17 +146,19 @@ public class GetConnection{
     }//getResults()
     
     public ArrayList getresults(String query){
-        ArrayList <ArrayList<String>> record = new ArrayList<ArrayList<String>>();
-        ArrayList <String>records = new ArrayList<String>();
+        ArrayList <ArrayList<String>> records = new ArrayList<ArrayList<String>>();
+        ArrayList <String>record = new ArrayList<String>();
         try (Statement stmt = conn.createStatement()){
             rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_size = rsmd.getColumnCount();
-
+            System.out.println(column_size);
             while (rs.next()){
                 for (int i = 1; i <= column_size; i++){
-                    records.add(rs.getString(i));
-                }                
+                    record.add(rs.getString(i));
+                }
+                records.add(record);
+                record = new ArrayList<String>();
             }
             rs.close();
         } catch (SQLException ex) {
