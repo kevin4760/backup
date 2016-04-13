@@ -134,13 +134,6 @@ public class GetConnection{
             rs.close();
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            if (stmt!=null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                }
-            }
         }
         return records;
     }//getResults()
