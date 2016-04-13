@@ -24,9 +24,9 @@ public class BedAndBreakfast {
         System.out.println("New World by Aaron Coffman");
         
 
-        GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","bekhaman",1521);
+        GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","bbpms.ddns.net",1521);
         db1.getDBConnection();
-        ArrayList results = db1.getresults("select rm_no from rooms");
+        ArrayList results = db1.getresults("select rm_no from rooms",1);
         System.out.println(results);
     }
     
