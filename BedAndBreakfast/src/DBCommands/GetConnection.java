@@ -127,7 +127,7 @@ public class GetConnection{
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()){
-                for (int i = 1; i < column_size; i++){
+                for (int i = 1; i <= column_size; i++){
                     records.add(rs.getString(i));
                 }                
             }
