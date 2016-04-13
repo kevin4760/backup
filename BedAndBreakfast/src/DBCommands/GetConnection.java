@@ -152,7 +152,7 @@ public class GetConnection{
             rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_size = rsmd.getColumnCount();
-            System.out.println(column_size);
+
             while (rs.next()){
                 for (int i = 1; i <= column_size; i++){
                     record.add(rs.getString(i));
