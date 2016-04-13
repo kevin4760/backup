@@ -121,8 +121,8 @@ public class GetConnection{
     
     
     //method getResults(), Prasana returning DB info to ArrayList
-    public ArrayList getresults(String query, int column_size){
-        ArrayList records = new ArrayList();
+    public ArrayList <String> getresults(String query, int column_size){
+        ArrayList <String> records = new ArrayList <> ();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
