@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bedandbreakfast;
+package DBCommands;
 
 import java.util.*;
 import java.sql.*;
@@ -31,6 +31,8 @@ public class GetConnection{
     private Statement stmt;
     private ResultSet rs;
     
+    
+    //constructors
     public GetConnection(String username, String password, String schema, String server, int port) {
         this.username = username;
         this.password = password;
@@ -41,7 +43,45 @@ public class GetConnection{
 //        connectionProps.put("user", username);
 //        connectionProps.put("password", password);
     }
+    //constructor to call kevins db connection
+    public GetConnection(int x){
+        if(x == 5) {
+            this.username = "system";
+            this.password = "fail1982";
+            this.schema = "xe";
+            this.server = "localhost";
+            this.port = 1521;
+        }
+        //you can add an if interger statement for yours
+    }
+    //end constructors
     
+    //getters
+    public Connection getConn() {
+        return this.conn;
+    }
+    
+    public ResultSet getRS() {
+        return this.rs;
+    }
+    
+    public Statement getStmt() {
+        return this.stmt;
+    }
+    //end getters
+    
+    //setters
+    public void setRS(ResultSet rs) {
+        this.rs = rs;
+    }
+    
+    public void setStmt(Statement stmt) {
+        this.stmt = stmt;
+    }
+    //end setters
+    
+    
+    //method getDBConnection(), 
     public void getDBConnection(){
         //this string is broke into these "jdbc:oracle:thin:username:passowrd@location:port:databasename
         //jdbc:oracle:thin:@server:port:schema
@@ -49,7 +89,7 @@ public class GetConnection{
                 ":" + schema;
         //System.out.println(URL);
         try {
-            conn = DriverManager.getConnection(URL, username, password);
+            this.conn = DriverManager.getConnection(URL, username, password);
             System.out.println("DB Connection Made");
         } catch(SQLException ex) {
             //System.out.println(ex.getMessage());
@@ -58,6 +98,29 @@ public class GetConnection{
         }
     }
     
+    //method validateUser()
+    public Boolean validateUser(String username, String password) {
+        
+        Boolean access = false;
+        try {
+            String sql = "SELECT * FROM employees WHERE user_name='" + username + 
+                "' and password='" + password +"'";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                access = true;
+                rs.close();
+            } else 
+                access = false;
+                rs.close();
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+        return access;        
+    }
+    
+    
+    //method getResults(), Prasana returning DB info to ArrayList
     public ArrayList getresults(String query, int column_size){
         ArrayList records = new ArrayList();
         try {
@@ -80,5 +143,6 @@ public class GetConnection{
             }
         }
         return records;
-    }
+    }//getResults()
+    
 }
