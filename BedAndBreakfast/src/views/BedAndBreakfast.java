@@ -5,6 +5,7 @@
  */
 package views;
 
+import DBCommands.GetConnection;
 import java.util.*;
 
 /**
@@ -23,10 +24,10 @@ public class BedAndBreakfast {
         System.out.println("New World by Aaron Coffman");
         
 
-//        GetConnection db1 = new GetConnection ("opera","opera","opera","ssut",1521);
-//        db1.getDBConnection();
-//        ArrayList results = db1.getresults("select * from resort where resort = 'MID'", 5);
-//        System.out.println(results);
+        GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","bekhaman",1521);
+        db1.getDBConnection();
+        ArrayList results = db1.getresults("select rm_no from rooms");
+        System.out.println(results);
     }
     
 }

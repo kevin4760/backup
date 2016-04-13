@@ -122,7 +122,7 @@ public class GetConnection{
     
     //method getResults(), Prasana returning DB info to ArrayList
     public ArrayList getresults(String query, int column_size){
-        ArrayList records = new ArrayList();
+        ArrayList<String> records = new ArrayList<String>();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -142,6 +142,28 @@ public class GetConnection{
                 }
             }
         }
+        return records;
+    }//getResults()
+    
+    public ArrayList getresults(String query){
+        ArrayList <ArrayList<String>> records = new ArrayList<ArrayList<String>>();
+        ArrayList <String>record = new ArrayList<String>();
+        try (Statement stmt = conn.createStatement()){
+            rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int column_size = rsmd.getColumnCount();
+
+            while (rs.next()){
+                for (int i = 1; i <= column_size; i++){
+                    record.add(rs.getString(i));
+                }
+                records.add(record);
+                record = new ArrayList<String>();
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
         return records;
     }//getResults()
     
