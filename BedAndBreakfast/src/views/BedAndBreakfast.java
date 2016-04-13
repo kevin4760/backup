@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bedandbreakfast;
+package views;
+
+import java.util.*;
 
 /**
  *
@@ -19,6 +21,12 @@ public class BedAndBreakfast {
         System.out.println("Hello World!");
         System.out.println("something else");
         System.out.println("New World by Aaron Coffman");
+        
+
+//        GetConnection db1 = new GetConnection ("opera","opera","opera","ssut",1521);
+//        db1.getDBConnection();
+//        ArrayList results = db1.getresults("select * from resort where resort = 'MID'", 5);
+//        System.out.println(results);
     }
     
 }
