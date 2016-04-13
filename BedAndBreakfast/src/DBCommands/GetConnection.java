@@ -127,20 +127,13 @@ public class GetConnection{
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()){
-                for (int i = 1; i < column_size; i++){
+                for (int i = 1; i <= column_size; i++){
                     records.add(rs.getString(i));
                 }                
             }
             rs.close();
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            if (stmt!=null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                }
-            }
         }
         return records;
     }//getResults()
