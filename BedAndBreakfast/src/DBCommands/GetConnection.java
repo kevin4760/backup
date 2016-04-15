@@ -139,9 +139,10 @@ public class GetConnection{
     }//getResults()
     
     public ArrayList getresults(String query){
-        ArrayList <ArrayList<String>> records = new ArrayList<ArrayList<String>>();
-        ArrayList <String>record = new ArrayList<String>();
-        try (Statement stmt = conn.createStatement()){
+        ArrayList <ArrayList<String>> records = new ArrayList<>();
+        ArrayList <String>record = new ArrayList<>();
+        try {
+            stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_size = rsmd.getColumnCount();
@@ -151,7 +152,7 @@ public class GetConnection{
                     record.add(rs.getString(i));
                 }
                 records.add(record);
-                record = new ArrayList<String>();
+                record = new ArrayList<>();
             }
             rs.close();
         } catch (SQLException ex) {
