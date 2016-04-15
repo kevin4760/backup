@@ -24,10 +24,16 @@ public class BedAndBreakfast {
         System.out.println("New World by Aaron Coffman");
         
 
+        //Examples of running queries
         GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","bbpms.ddns.net",1521);
         db1.getDBConnection();
+        //Single column query
         ArrayList results = db1.getresults("select rm_no from rooms",1);
         System.out.println(results);
+        //multiple column query
+        ArrayList <ArrayList<String>> result = db1.getresults("select * from rooms");
+        System.out.println(result);
+        System.out.println(result.get(1).get(0));
     }
     
 }
