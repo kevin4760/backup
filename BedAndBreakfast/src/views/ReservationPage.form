@@ -365,7 +365,7 @@
                       <Component id="City" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Component id="ZipCode" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="State" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -389,7 +389,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="State" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -415,7 +415,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ZipCodeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="State">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="51">
@@ -620,7 +620,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="bookButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="cancelButton" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="clearButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="searchButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -633,7 +633,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="bookButton" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="cancelButton" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="clearButton" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="exitButton" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="searchButton" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
@@ -641,7 +641,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="cancelButton">
+        <Component class="javax.swing.JButton" name="clearButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -650,6 +650,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="exitButton">
           <Properties>
@@ -675,6 +678,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bookButtonMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="searchButton">

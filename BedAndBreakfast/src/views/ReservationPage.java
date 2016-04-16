@@ -5,12 +5,12 @@
  */
 package views;
 
+import DBCommands.GetConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Aaron
@@ -52,7 +52,7 @@ public class ReservationPage extends javax.swing.JFrame {
         Street = new javax.swing.JTextField();
         City = new javax.swing.JTextField();
         ZipCode = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox();
+        State = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -65,7 +65,7 @@ public class ReservationPage extends javax.swing.JFrame {
         roomsAvailCmbx = new javax.swing.JComboBox();
         jLabel14 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        cancelButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         bookButton = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
@@ -224,7 +224,7 @@ public class ReservationPage extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", " " }));
+        State.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", " " }));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Street");
@@ -259,7 +259,7 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addComponent(City, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(ZipCode, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(State, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -277,7 +277,7 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -343,8 +343,13 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        cancelButton.setText("Clear");
-        cancelButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        clearButton.setText("Clear");
+        clearButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         exitButton.setText("Exit");
         exitButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -359,6 +364,11 @@ public class ReservationPage extends javax.swing.JFrame {
         bookButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bookButtonMouseClicked(evt);
+            }
+        });
+        bookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookButtonActionPerformed(evt);
             }
         });
 
@@ -378,7 +388,7 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(bookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -389,7 +399,7 @@ public class ReservationPage extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(bookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -480,19 +490,84 @@ public class ReservationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ZipCodeActionPerformed
 
     private void bookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookButtonMouseClicked
-        //Local Variables
-        String firstName, lastName, guestNumber, street, city,
-               checkInDate, checkOutDate, numberOfNights;  
        
-       //Setting Text Fields
-       firstName=FirstName.getText();
-       lastName=LastName.getText();
-       guestNumber=GuestNumber.getText();
-       street=Street.getText();
-       city=City.getText();
+    }//GEN-LAST:event_bookButtonMouseClicked
+
+    private void CheckOutDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckOutDateMouseClicked
+        //Checkout Date ComboBox Shows Calendar on Mouse Click
+        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar().getTime());
+    }//GEN-LAST:event_CheckOutDateMouseClicked
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // opens search screen
+        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new Dashboard().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        //Resets all the Fields
+        FirstName.setText(null);
+        LastName.setText(null);
+        Street.setText(null);
+        City.setText(null);
+        ZipCode.setText(null);
+        NumberOfNights.setText(null);
+        GuestNumber.setText(null);
+        Title.setSelectedIndex(0);
+        roomsAvailCmbx.setSelectedIndex(0);
+        State.setSelectedIndex(0);
+        CheckInDate.setDate(new Date());
+        CheckOutDate.setDate(new Date());        
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
+        //Get Connection to Database Block       
+        GetConnection gc = new GetConnection(5);
+        gc.getDBConnection();
+        
+        //Coverts Selected Index into String       
+        String title =String.valueOf(Title.getSelectedIndex());
+        
+        //Write Guest Information to the Database
+        gc.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
+                LastName.getText(),title);
+        
+        //Converts Selected Index into String
+        String state =String.valueOf(State.getSelectedIndex());
+        gc.setGuestAddress(GuestNumber.getText(), Street.getText(), 
+                City.getText(),state, ZipCode.getText()); 
+        
+        //Gets date set by user
+        getNewDate();  
+        //Formats date for database
+        DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
+        String inDate=dataBaseFormat.format(date1);      
+        String outDate=dataBaseFormat.format(date2);
+        
+        //STILL DEBUGING
+        gc.setReservation("543", "2", GuestNumber.getText(), inDate, outDate, 3.14);
+              
+    }//GEN-LAST:event_bookButtonActionPerformed
+   
+    //UNDER CONSTRUCTION
+    public static int reservationNumberGenerator(int n, int []resNumber){
+      
+      return 0;  
+    }
+    private void getNewDate(){
        
-       //Formating Date to mmm-dd-yyyy
-       DateFormat format1=SimpleDateFormat.getDateInstance();   
+        //Formating Date to mmm-dd-yyyy
+       DateFormat format1=SimpleDateFormat.getDateInstance();     
        
        //Try Catch for Date Comparision
         try{
@@ -527,29 +602,9 @@ public class ReservationPage extends javax.swing.JFrame {
         catch(ParseException ex){
             //Temp Error Message
             ex.printStackTrace();
-        }       
-    }//GEN-LAST:event_bookButtonMouseClicked
-
-    private void CheckOutDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckOutDateMouseClicked
-        //Checkout Date ComboBox Shows Calendar on Mouse Click
-        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar().getTime());
-    }//GEN-LAST:event_CheckOutDateMouseClicked
-
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // opens search screen
-        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        new Dashboard().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
+        }  
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -593,13 +648,13 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JTextField GuestNumber;
     private javax.swing.JTextField LastName;
     private javax.swing.JTextField NumberOfNights;
+    private javax.swing.JComboBox State;
     private javax.swing.JTextField Street;
     private javax.swing.JComboBox Title;
     private javax.swing.JTextField ZipCode;
     private javax.swing.JButton bookButton;
-    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton clearButton;
     private javax.swing.JButton exitButton;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

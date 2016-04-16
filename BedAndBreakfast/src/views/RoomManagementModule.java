@@ -5,17 +5,32 @@
  */
 package views;
 
+import DBCommands.GetConnection;
+import java.util.ArrayList;
+
 /**
  *
  * @author Aaron
+ * db linking Prasanna
  */
 public class RoomManagementModule extends javax.swing.JFrame {
-
+    private String[] rooms;
+    private GetConnection conn;
+    private ArrayList<ArrayList<String>> results;
     /**
      * Creates new form RoomManagementModule
      */
     public RoomManagementModule() {
         initComponents();
+        conn = new GetConnection();
+        conn.getDBConnection();
+        results = conn.getresults("select rm_no,clean from rooms");
+        rooms = new String[results.size()];
+        for (int i = 0; i < results.size(); i++){
+            rooms[i] = results.get(i).get(0);
+        }
+        jList1.setListData(rooms);
+        jList2.setListData(rooms);
     }
 
     /**
@@ -27,12 +42,13 @@ public class RoomManagementModule extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButtonGroupCleanDirty = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButtonClean = new javax.swing.JRadioButton();
+        jRadioButtonDirty = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
@@ -60,14 +76,37 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Housekeeping");
 
-        jRadioButton1.setText("Clean");
+        jRadioButtonGroupCleanDirty.add(jRadioButtonClean);
+        jRadioButtonClean.setText("Clean");
+        jRadioButtonClean.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButtonCleanStateChanged(evt);
+            }
+        });
+        jRadioButtonClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonCleanActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("Dirty");
+        jRadioButtonGroupCleanDirty.add(jRadioButtonDirty);
+        jRadioButtonDirty.setText("Dirty");
+        jRadioButtonDirty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonDirtyActionPerformed(evt);
+            }
+        });
 
         jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" };
+            String[] strings = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(jList1);
 
@@ -86,8 +125,8 @@ public class RoomManagementModule extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(jRadioButtonDirty)
+                    .addComponent(jRadioButtonClean))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -100,9 +139,9 @@ public class RoomManagementModule extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButtonClean)
                         .addGap(33, 33, 33)
-                        .addComponent(jRadioButton2))
+                        .addComponent(jRadioButtonDirty))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -114,6 +153,7 @@ public class RoomManagementModule extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList2);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -185,6 +225,11 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jButton1.setText("Update");
 
         jButton2.setText("Exit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -251,6 +296,52 @@ public class RoomManagementModule extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        conn.closeConnection();
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jRadioButtonDirtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonDirtyActionPerformed
+        // TODO add your handling code here:
+        conn.runquery("update rooms set clean = 1 where rm_no = '"
+                + jList1.getSelectedValue().toString() + "'");
+        refreshRooms();
+    }//GEN-LAST:event_jRadioButtonDirtyActionPerformed
+
+    private void jRadioButtonCleanStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonCleanStateChanged
+        // TODO add your handling code here:    
+    }//GEN-LAST:event_jRadioButtonCleanStateChanged
+
+    private void jRadioButtonCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCleanActionPerformed
+        // TODO add your handling code here:
+        conn.runquery("update rooms set clean = 0 where rm_no = '"
+                + jList1.getSelectedValue().toString() + "'");
+        refreshRooms();
+    }//GEN-LAST:event_jRadioButtonCleanActionPerformed
+
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        // TODO add your handling code here:
+        //Search array for the room
+        String selectedRoom = jList1.getSelectedValue().toString();
+        int index = 0;
+        while (index < rooms.length){
+            if (results.get(index).get(0).equals(selectedRoom)) break;
+            index++;
+        }
+        if (results.get(index).get(1).equals("0")){
+            jRadioButtonClean.setSelected(true);
+        } else {
+            jRadioButtonDirty.setSelected(true);
+        }
+    }//GEN-LAST:event_jList1ValueChanged
+    private void refreshRooms(){
+        results = conn.getresults("select rm_no,clean from rooms");
+        rooms = new String[results.size()];
+        for (int i = 0; i < results.size(); i++){
+                rooms[i] = results.get(i).get(0);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -304,8 +395,9 @@ public class RoomManagementModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonClean;
+    private javax.swing.JRadioButton jRadioButtonDirty;
+    private javax.swing.ButtonGroup jRadioButtonGroupCleanDirty;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
