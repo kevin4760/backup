@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Aaron
@@ -367,6 +366,11 @@ public class ReservationPage extends javax.swing.JFrame {
                 bookButtonMouseClicked(evt);
             }
         });
+        bookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookButtonActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("Search");
         searchButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -486,13 +490,84 @@ public class ReservationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ZipCodeActionPerformed
 
     private void bookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookButtonMouseClicked
-         
-        //GetConnection gc = new GetConnection(5);
-        //gc.getDBConnection();
+       
+    }//GEN-LAST:event_bookButtonMouseClicked
+
+    private void CheckOutDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckOutDateMouseClicked
+        //Checkout Date ComboBox Shows Calendar on Mouse Click
+        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar().getTime());
+    }//GEN-LAST:event_CheckOutDateMouseClicked
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // opens search screen
+        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new Dashboard().setVisible(rootPaneCheckingEnabled);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        //Resets all the Fields
+        FirstName.setText(null);
+        LastName.setText(null);
+        Street.setText(null);
+        City.setText(null);
+        ZipCode.setText(null);
+        NumberOfNights.setText(null);
+        GuestNumber.setText(null);
+        Title.setSelectedIndex(0);
+        roomsAvailCmbx.setSelectedIndex(0);
+        State.setSelectedIndex(0);
+        CheckInDate.setDate(new Date());
+        CheckOutDate.setDate(new Date());        
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
+        //Get Connection to Database Block       
+        GetConnection gc = new GetConnection(5);
+        gc.getDBConnection();
         
+        //Coverts Selected Index into String       
+        String title =String.valueOf(Title.getSelectedIndex());
         
-       //Formating Date to mmm-dd-yyyy
-       DateFormat format1=SimpleDateFormat.getDateInstance();   
+        //Write Guest Information to the Database
+        gc.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
+                LastName.getText(),title);
+        
+        //Converts Selected Index into String
+        String state =String.valueOf(State.getSelectedIndex());
+        gc.setGuestAddress(GuestNumber.getText(), Street.getText(), 
+                City.getText(),state, ZipCode.getText()); 
+        
+        //Gets date set by user
+        getNewDate();  
+        //Formats date for database
+        DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
+        String inDate=dataBaseFormat.format(date1);      
+        String outDate=dataBaseFormat.format(date2);
+        
+        //STILL DEBUGING
+        gc.setReservation("543", "2", GuestNumber.getText(), inDate, outDate, 3.14);
+              
+    }//GEN-LAST:event_bookButtonActionPerformed
+   
+    //UNDER CONSTRUCTION
+    public static int reservationNumberGenerator(int n, int []resNumber){
+      
+      return 0;  
+    }
+    private void getNewDate(){
+       
+        //Formating Date to mmm-dd-yyyy
+       DateFormat format1=SimpleDateFormat.getDateInstance();     
        
        //Try Catch for Date Comparision
         try{
@@ -527,44 +602,9 @@ public class ReservationPage extends javax.swing.JFrame {
         catch(ParseException ex){
             //Temp Error Message
             ex.printStackTrace();
-        }       
-    }//GEN-LAST:event_bookButtonMouseClicked
-
-    private void CheckOutDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckOutDateMouseClicked
-        //Checkout Date ComboBox Shows Calendar on Mouse Click
-        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar().getTime());
-    }//GEN-LAST:event_CheckOutDateMouseClicked
-
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // opens search screen
-        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        new Dashboard().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        FirstName.setText(null);
-        LastName.setText(null);
-        Street.setText(null);
-        City.setText(null);
-        ZipCode.setText(null);
-        NumberOfNights.setText(null);
-        GuestNumber.setText(null);
-        Title.setSelectedIndex(0);
-        roomsAvailCmbx.setSelectedIndex(0);
-        State.setSelectedIndex(0);
-        CheckInDate.setDate(new Date());
-        CheckOutDate.setDate(new Date());        
-    }//GEN-LAST:event_clearButtonActionPerformed
-
+        }  
+    }
+    
     /**
      * @param args the command line arguments
      */
