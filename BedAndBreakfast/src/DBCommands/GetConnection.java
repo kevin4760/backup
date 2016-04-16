@@ -179,6 +179,7 @@ public class GetConnection{
                     +price+"')";
             stmt=conn.createStatement();
             stmt.executeUpdate(sql);
+            stmt.close();
         }
          catch(SQLException ex) {
             System.out.println(ex);
@@ -197,8 +198,8 @@ public class GetConnection{
                     records.add(rs.getString(i));
                 }                
             }
-            stmt.close();
             rs.close();
+            stmt.close();
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -221,8 +222,8 @@ public class GetConnection{
                 records.add(record);
                 record = new ArrayList<>();
             }
-            stmt.close();
             rs.close();
+            stmt.close();
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
@@ -237,8 +238,8 @@ public class GetConnection{
             } else {
                 return stmt.getUpdateCount();
             }            
-            stmt.close();
             rs.close();
+            stmt.close();
         } catch (SQLException ex){
             return -1;
         }
