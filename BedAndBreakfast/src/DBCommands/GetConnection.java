@@ -69,6 +69,8 @@ public class GetConnection{
     
     public void closeConnection(){
         try{
+            stmt.close();
+            rs.close();
             conn.close();
         }catch (SQLException ex){
         }
@@ -139,7 +141,7 @@ public class GetConnection{
     
     //method getResults(), Prasana returning DB info to ArrayList
     public ArrayList getresults(String query, int column_size){
-        ArrayList<String> records = new ArrayList<String>();
+        ArrayList<String> records = new ArrayList<>();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -159,7 +161,8 @@ public class GetConnection{
     public ArrayList <ArrayList<String>> getresults(String query){
         ArrayList <ArrayList<String>> records = new ArrayList<>();
         ArrayList <String>record = new ArrayList<>();
-        try (Statement stmt = conn.createStatement()){
+        try {
+            stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_size = rsmd.getColumnCount();
@@ -180,12 +183,15 @@ public class GetConnection{
     }//getResults()
     
     public int runquery(String query){
-        try (Statement stmt = conn.createStatement()){
+        try {
+            stmt = conn.createStatement();
             if (stmt.execute(query) == true){
                 rs = stmt.getResultSet();
             } else {
                 return stmt.getUpdateCount();
             }            
+            stmt.close();
+            rs.close();
         } catch (SQLException ex){
             return -1;
         }
