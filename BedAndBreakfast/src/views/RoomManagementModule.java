@@ -17,7 +17,6 @@ public class RoomManagementModule extends javax.swing.JFrame {
     private String[] rooms;
     private GetConnection conn;
     private ArrayList<ArrayList<String>> results;
-    private ArrayList<String> result;
     /**
      * Creates new form RoomManagementModule
      */
@@ -32,7 +31,6 @@ public class RoomManagementModule extends javax.swing.JFrame {
         }
         jList1.setListData(rooms);
         jList2.setListData(rooms);
-        conn.closeConnection();
     }
 
     /**
@@ -306,14 +304,8 @@ public class RoomManagementModule extends javax.swing.JFrame {
 
     private void jRadioButtonDirtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonDirtyActionPerformed
         // TODO add your handling code here:
-        conn = new GetConnection();
-        conn.getDBConnection();
-//        System.out.println("update rooms set clean = 0 where rm_no = '" 
-//                + jList1.getSelectedValue().toString() + "'");
         conn.runquery("update rooms set clean = 1 where rm_no = '"
                 + jList1.getSelectedValue().toString() + "'");
-        //System.out.println(result);
-        conn.closeConnection();
         refreshRooms();
     }//GEN-LAST:event_jRadioButtonDirtyActionPerformed
 
@@ -323,14 +315,8 @@ public class RoomManagementModule extends javax.swing.JFrame {
 
     private void jRadioButtonCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCleanActionPerformed
         // TODO add your handling code here:
-        conn = new GetConnection();
-        conn.getDBConnection();
-//        System.out.println("update rooms set clean = 0 where rm_no = '" 
-//                + jList1.getSelectedValue().toString() + "'");
         conn.runquery("update rooms set clean = 0 where rm_no = '"
                 + jList1.getSelectedValue().toString() + "'");
-        //System.out.println(result);
-        conn.closeConnection();
         refreshRooms();
     }//GEN-LAST:event_jRadioButtonCleanActionPerformed
 
@@ -345,21 +331,16 @@ public class RoomManagementModule extends javax.swing.JFrame {
         }
         if (results.get(index).get(1).equals("0")){
             jRadioButtonClean.setSelected(true);
-//            jRadioButtonGroupCleanDirty;
         } else {
             jRadioButtonDirty.setSelected(true);
         }
-        //conn.closeConnection();
     }//GEN-LAST:event_jList1ValueChanged
     private void refreshRooms(){
-        conn = new GetConnection();
-        conn.getDBConnection();
         results = conn.getresults("select rm_no,clean from rooms");
         rooms = new String[results.size()];
         for (int i = 0; i < results.size(); i++){
                 rooms[i] = results.get(i).get(0);
         }
-        conn.closeConnection();
     }
     /**
      * @param args the command line arguments
