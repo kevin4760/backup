@@ -30,7 +30,7 @@ public class GetConnection{
     private String URL;
     private Statement stmt;
     private ResultSet rs;
-    
+   
     
     //constructors
     public GetConnection(String username, String password, String schema, String server, int port) {
@@ -47,7 +47,7 @@ public class GetConnection{
     public GetConnection(int x){
         if(x == 5) {
             this.username = "system";
-            this.password = "fail1982";
+            this.password = "ANK22dec2010!!";
             this.schema = "xe";
             this.server = "localhost";
             this.port = 1521;
@@ -84,7 +84,7 @@ public class GetConnection{
     //method getDBConnection(), 
     public void getDBConnection(){
         //this string is broke into these "jdbc:oracle:thin:username:passowrd@location:port:databasename
-        //jdbc:oracle:thin:@server:port:schema
+        //jdbc:oracle:thin:@server:port:schema        
         URL = "jdbc:oracle:thin:" + "@" + server + ":" + port +
                 ":" + schema;
         //System.out.println(URL);
@@ -119,6 +119,53 @@ public class GetConnection{
         return access;        
     }
     
+    //Set Guest Information Method
+    public void setGuestInfo(String guestNumber, String first, 
+            String last, String title){
+        
+        try{
+        String sql="INSERT INTO guests(GUEST_NO, FIRST_NAME, LAST_NAME, TITLE) "
+                + "Values('"+guestNumber+"','"+first+"','"+last+"','"+title+"')";
+        stmt=conn.createStatement(); 
+        stmt.executeUpdate(sql);
+        }   
+        catch(SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    //Set Guest Address Method
+    public void setGuestAddress(String guestNumber, String street, String city, 
+            String state, String zipcode){
+        
+        try{
+            String sql="INSERT INTO addresses(GUEST_NO, STREET, CITY, STATE, ZIP) "+
+                    "Values('"+guestNumber+"','"+street+"','"+city+"','"+
+                    state+"','"+zipcode+"')";
+            stmt=conn.createStatement();
+            stmt.executeUpdate(sql);
+        }
+         catch(SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+        
+    //Set Reseration Method
+    public void setReservation(String reservationNum, String roomNum, String guestNumber
+    ,String inDate, String outDate, Double price){
+        try{
+            String sql="INSERT INTO reservations(RES_NO, RM_NO, GUEST_NO, "
+                    + "IN_DATE, OUT_DATE, PRICE)Values('"+reservationNum+"','"
+                    +roomNum+"','"+guestNumber+"','"+inDate+"','"+outDate+"','"
+                    +price+"')";
+            stmt=conn.createStatement();
+            stmt.executeUpdate(sql);
+        }
+         catch(SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+   
     
     //method getResults(), Prasana returning DB info to ArrayList
     public ArrayList getresults(String query, int column_size){
