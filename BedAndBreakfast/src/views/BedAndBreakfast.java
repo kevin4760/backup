@@ -7,6 +7,7 @@ package views;
 
 import DBCommands.GetConnection;
 import java.util.*;
+import javax.swing.*;
 
 /**
  *
@@ -25,15 +26,23 @@ public class BedAndBreakfast {
         
 
         //Examples of running queries
-        GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","bbpms.ddns.net",1521);
+        GetConnection db1 = new GetConnection ("bbpms","bbpms","orcl","192.168.1.6",1521);
         db1.getDBConnection();
         //Single column query
-        ArrayList results = db1.getresults("select rm_no from rooms",1);
-        System.out.println(results);
-        //multiple column query
-        ArrayList <ArrayList<String>> result = db1.getresults("select * from rooms");
+        ArrayList result = db1.getresults("select rm_no from rooms",1);
         System.out.println(result);
-        System.out.println(result.get(1).get(0));
+        //multiple column query
+        ArrayList <ArrayList<String>> results = db1.getresults("select * from rooms");
+        System.out.println(results);
+        System.out.println(results.get(1).get(0));
+        
+        
+        RoomManagementModule rmManageModule = new RoomManagementModule();
+        rmManageModule.pack();
+        rmManageModule.setTitle("Employee Module");
+        rmManageModule.setLocationRelativeTo(null);
+        rmManageModule.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        rmManageModule.setVisible(true);
     }
     
 }
