@@ -329,6 +329,8 @@ public class RoomManagementModule extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
         //Search array for the room
+        if (jList1.getSelectedIndex() == -1)
+            jList1.setSelectedIndex(0);
         String selectedRoom = jList1.getSelectedValue().toString();
         int index = 0;
         while (index < rooms.length){
