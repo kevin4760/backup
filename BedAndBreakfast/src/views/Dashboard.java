@@ -46,7 +46,6 @@ public class Dashboard extends javax.swing.JFrame {
         //percent used
         
         //edits jButtons
-        clean.set;
     }
 
     /**
