@@ -35,7 +35,21 @@ public class RoomManagementModule extends javax.swing.JFrame {
                jComboBoxRoomSelector.addItem(j);
         }
     }
-
+    public RoomManagementModule(GetConnection conn) {
+        initComponents();
+        this.conn = conn;
+        conn.getDBConnection();
+        results = conn.getresults("select rm_no,clean from rooms");
+        rooms = new String[results.size()];
+        for (int i = 0; i < results.size(); i++){
+            rooms[i] = results.get(i).get(0);
+        }
+        jList1.setListData((String[])rooms);
+        jComboBoxRoomSelector.removeAllItems();
+        for (String j : rooms){
+               jComboBoxRoomSelector.addItem(j);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
