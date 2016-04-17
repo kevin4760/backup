@@ -5,6 +5,7 @@
  */
 package DBCommands;
 
+import static java.lang.System.out;
 import java.util.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -186,6 +187,19 @@ public class GetConnection{
         }
     }
    
+    //method returns one value from database
+    public int getRoomStatus(String query) {
+        int roomStatus = 3; //3 will be invalid input
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            rs.next();
+            roomStatus = Integer.parseInt(rs.getString(1));
+        } catch(SQLException ex) {
+            out.println(ex);
+        }
+        return roomStatus;
+    }
     
     //method getResults(), Prasana returning DB info to ArrayList
     public ArrayList getresults(String query, int column_size){
