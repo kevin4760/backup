@@ -29,7 +29,7 @@ public class RoomManagementModule extends javax.swing.JFrame {
         for (int i = 0; i < results.size(); i++){
             rooms[i] = results.get(i).get(0);
         }
-        jList1.setListData(rooms);
+        jList1.setListData((String[])rooms);
         jComboBoxRoomSelector.removeAllItems();
         for (String j : rooms){
                jComboBoxRoomSelector.addItem(j);
@@ -64,7 +64,6 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBoxRoomSelector = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -235,8 +234,6 @@ public class RoomManagementModule extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Update");
-
         jButton2.setText("Exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,9 +246,7 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -259,9 +254,7 @@ public class RoomManagementModule extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(jButton2)
                 .addContainerGap())
         );
 
@@ -336,6 +329,8 @@ public class RoomManagementModule extends javax.swing.JFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         // TODO add your handling code here:
         //Search array for the room
+        if (jList1.getSelectedIndex() == -1)
+            jList1.setSelectedIndex(0);
         String selectedRoom = jList1.getSelectedValue().toString();
         int index = 0;
         while (index < rooms.length){
@@ -367,10 +362,10 @@ public class RoomManagementModule extends javax.swing.JFrame {
         results = conn.getresults("select rm_no,clean from rooms");
         rooms = new String[results.size()];
         for (int i = 0; i < results.size(); i++){
-                rooms[i] = results.get(i).get(0);
+            rooms[i] = results.get(i).get(0);
         }
         jList1.removeAll();
-        jList1.setListData(rooms);
+        jList1.setListData((String[])rooms);
         jComboBoxRoomSelector.removeAllItems();
         for (String j : rooms){
             jComboBoxRoomSelector.addItem(j);
@@ -412,7 +407,6 @@ public class RoomManagementModule extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAddRoom;
     private javax.swing.JButton jButtonRemoveRoom;
