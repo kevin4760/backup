@@ -500,7 +500,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         this.dispose();
-        System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
@@ -532,7 +532,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
         //Get Connection to Database Block       
-        GetConnection gc = new GetConnection(5);
+        GetConnection gc = new GetConnection();
         gc.getDBConnection();
         
         //Coverts Selected Index into String       

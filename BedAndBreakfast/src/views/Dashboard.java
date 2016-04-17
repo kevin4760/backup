@@ -6,18 +6,46 @@
 package views;
 
 import DBCommands.GetConnection;
+import java.util.ArrayList;
 
 /**
  *
  * @author Aaron
+ * linked kevin
  */
 public class Dashboard extends javax.swing.JFrame {
 
+    private String[] rooms;
+    private GetConnection conn;
+    private ArrayList<String> results;
+    private int roomStatus;
+    
     /**
      * Creates new form Dashboard
      */
+    
     public Dashboard() {
-        initComponents();
+        initComponents();  //
+        //
+        conn = new GetConnection();
+        conn.getDBConnection();
+        
+        //populate roomList
+        results = conn.getresults("SELECT rm_no from rooms", 1);
+        rooms = new String[results.size()];
+        for (int i = 0; i < results.size(); i++ ) {
+            rooms[i] = results.get(i);
+        }
+        roomList.setListData(rooms);
+        //end roomList
+        
+        //checks the number of guest checked in
+        
+        //checks occupied and unoccupied rooms
+        
+        //percent used
+        
+        //edits jButtons
     }
 
     /**
@@ -42,11 +70,11 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        numberGuest = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        occupiedRooms = new javax.swing.JTextField();
+        unoccupiedRooms = new javax.swing.JTextField();
+        percentUsed = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -54,8 +82,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        clean = new javax.swing.JRadioButton();
+        dirty = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -66,7 +94,6 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -176,13 +203,13 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)))
+                            .addComponent(occupiedRooms)
+                            .addComponent(numberGuest)
+                            .addComponent(unoccupiedRooms, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4)))
+                        .addComponent(percentUsed)))
                 .addContainerGap())
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -193,19 +220,19 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(numberGuest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(occupiedRooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(unoccupiedRooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(percentUsed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3))
         );
 
@@ -213,13 +240,20 @@ public class Dashboard extends javax.swing.JFrame {
 
         roomList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "120", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+            //  Start new code
 
+            //  end new code
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         roomList.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 roomListPropertyChange(evt);
+            }
+        });
+        roomList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                roomListValueChanged(evt);
             }
         });
         jScrollPane5.setViewportView(roomList);
@@ -250,9 +284,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         jRadioButton3.setText("Occupied");
 
-        jRadioButton1.setText("Clean");
+        clean.setText("Clean");
 
-        jRadioButton2.setText("Dirty");
+        dirty.setText("Dirty");
 
         jRadioButton4.setText("Unoccupied");
 
@@ -263,9 +297,9 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
+                    .addComponent(clean)
                     .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dirty, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -273,9 +307,9 @@ public class Dashboard extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
+                .addComponent(clean)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(dirty)
                 .addGap(17, 17, 17)
                 .addComponent(jRadioButton3)
                 .addGap(18, 18, 18)
@@ -338,14 +372,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jMenu1.add(jMenu3);
 
-        jMenuItem6.setText("Value Check");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem6);
-
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Options");
@@ -383,48 +409,57 @@ public class Dashboard extends javax.swing.JFrame {
     private void reservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationActionPerformed
         // moves view to reservationpage, hides dashboard
         new ReservationPage().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_reservationActionPerformed
 
     private void guestSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestSearchActionPerformed
         // moves view to GuestSearchModule, hides dashboard
         new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_guestSearchActionPerformed
 
     private void reservationSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationSearchActionPerformed
         // moves view to reservationSearchModule, hides dashboard
         new ReservationSearchModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_reservationSearchActionPerformed
 
     private void exitProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitProgramActionPerformed
         // exit program
+        conn.closeConnection();
         System.exit(0);
     }//GEN-LAST:event_exitProgramActionPerformed
 
     private void roomSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomSearchActionPerformed
         // moves view to roomSearchModule, hides dashboard
         new RoomManagementModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_roomSearchActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         new Dashboard().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         new GuestSearchModule().setVisible(true);
-        this.setVisible(false);
+        //this.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    private void roomListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_roomListValueChanged
+        String selectedRoom = roomList.getSelectedValue().toString();
+        roomStatus = conn.getRoomStatus("select clean from rooms where rm_no = '"+selectedRoom+"'");
+        if(roomStatus == 0 ) {
+            clean.setSelected(true);
+            dirty.setSelected(false);
+        } 
+        if (roomStatus == 1) {
+            clean.setSelected(false);
+            dirty.setSelected(true);
+        };
+    }//GEN-LAST:event_roomListValueChanged
 
     /**
      * @param args the command line arguments
@@ -462,6 +497,8 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton clean;
+    private javax.swing.JRadioButton dirty;
     private javax.swing.JButton employee;
     private javax.swing.JButton exitProgram;
     private javax.swing.JButton guestSearch;
@@ -482,24 +519,21 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField numberGuest;
+    private javax.swing.JTextField occupiedRooms;
+    private javax.swing.JTextField percentUsed;
     private javax.swing.JButton reservation;
     private javax.swing.JButton reservationSearch;
     private javax.swing.JList roomList;
     private javax.swing.JButton roomSearch;
+    private javax.swing.JTextField unoccupiedRooms;
     // End of variables declaration//GEN-END:variables
 }

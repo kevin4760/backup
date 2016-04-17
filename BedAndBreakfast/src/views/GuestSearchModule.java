@@ -357,7 +357,8 @@ public class GuestSearchModule extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        //System.exit(0);
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

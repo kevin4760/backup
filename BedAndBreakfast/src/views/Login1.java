@@ -133,7 +133,7 @@ public class Login1 extends javax.swing.JFrame {
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
         // validates username and password moves to reservation screen
-        GetConnection gc = new GetConnection(5);
+        GetConnection gc = new GetConnection();
         gc.getDBConnection();
         System.out.println(gc.validateUser(username.getText(), password.getText()));
         if(gc.validateUser(username.getText(), password.getText())){
