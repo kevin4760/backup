@@ -409,19 +409,19 @@ public class Dashboard extends javax.swing.JFrame {
     private void reservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationActionPerformed
         // moves view to reservationpage, hides dashboard
         new ReservationPage().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_reservationActionPerformed
 
     private void guestSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestSearchActionPerformed
         // moves view to GuestSearchModule, hides dashboard
         new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_guestSearchActionPerformed
 
     private void reservationSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationSearchActionPerformed
         // moves view to reservationSearchModule, hides dashboard
         new ReservationSearchModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_reservationSearchActionPerformed
 
     private void exitProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitProgramActionPerformed
@@ -433,19 +433,19 @@ public class Dashboard extends javax.swing.JFrame {
     private void roomSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomSearchActionPerformed
         // moves view to roomSearchModule, hides dashboard
         new RoomManagementModule().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_roomSearchActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         new Dashboard().setVisible(rootPaneCheckingEnabled);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         new GuestSearchModule().setVisible(true);
-        this.setVisible(false);
+        this.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void roomListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_roomListValueChanged
