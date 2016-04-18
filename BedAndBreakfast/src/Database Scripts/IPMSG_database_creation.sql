@@ -1,4 +1,3 @@
-Spool 'C:\Users\Kevin\Desktop\workspace\CMIS 495\database\database.txt' replace
 
 DROP TABLE hotels CASCADE CONSTRAINTS;
 CREATE TABLE hotels (
