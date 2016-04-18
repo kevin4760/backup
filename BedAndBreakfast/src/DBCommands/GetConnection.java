@@ -273,8 +273,8 @@ public class GetConnection{
     public String uniqueID(String table, String column) throws SQLException{
         Random random = new Random();
         Integer newID = random.nextInt(10000000);
-
-        PreparedStatement checkID = null;
+        
+        
         String sql = "SELECT "+ column +" FROM "+ table +" WHERE "+ column +" = '"+ newID.toString() +"'";
         try {
             //if rs!=new id; return newID;
