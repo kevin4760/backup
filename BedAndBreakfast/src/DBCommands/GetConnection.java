@@ -131,7 +131,7 @@ public class GetConnection{
                 rs.close();
             } else 
                 access = false;
-                rs.close();
+            rs.close();
         } catch(SQLException ex) {
             System.out.println(ex);
         }
