@@ -1,16 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Programmer: Aaron Coffman
+ * Date: 17 Apr 16
  */
 package views;
+
 
 import DBCommands.GetConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
  * @author Aaron
@@ -18,10 +20,27 @@ import javax.swing.JOptionPane;
 public class ReservationPage extends javax.swing.JFrame {
     //Global Date Variables
     Date date1,date2;
-   
+    private String[] rooms;
+    private GetConnection conn;
+    private ArrayList<ArrayList<String>> results;
+    private ArrayList<String> name;
+    private String[] names;
     public ReservationPage() {
         initComponents();
-    }
+           
+        conn = new GetConnection();
+        conn.getDBConnection();
+        
+        results = conn.getresults("select rm_no from rooms order by"
+                + " use_count asc");
+        rooms = new String[results.size()];
+        for (int i = 0; i < results.size(); i++){
+            rooms[i] = results.get(i).get(0);            
+            roomsAvailCmbx.addItem(results.get(i).toString().replace(",", "")
+                .replace("[", "").replace("]", "").trim());         
+        }  
+        
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +77,8 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        searchResults = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         NumberOfNights = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -194,7 +215,7 @@ public class ReservationPage extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,6 +263,9 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Address Information");
 
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Search Results");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -255,13 +279,17 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Street, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(City, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Street, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(ZipCode, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(State, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchResults, 0, 141, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,11 +298,13 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Street, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(City, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(searchResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +313,7 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -318,8 +348,6 @@ public class ReservationPage extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        roomsAvailCmbx.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Room 1", "Room 2", "Room 3" }));
-
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Rooms Available ");
 
@@ -329,7 +357,7 @@ public class ReservationPage extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(roomsAvailCmbx, 0, 176, Short.MAX_VALUE)
+                .addComponent(roomsAvailCmbx, 0, 191, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -339,7 +367,7 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(roomsAvailCmbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roomsAvailCmbx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -474,20 +502,13 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void CheckInDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckInDateMouseClicked
         //Check In Date ComboBox Shows Calendar on Mouse Click
-        JOptionPane.showMessageDialog(rootPane, CheckInDate.getCalendar().getTime());
+        JOptionPane.showMessageDialog(rootPane, CheckInDate.getCalendar()
+                .getTime());
     }//GEN-LAST:event_CheckInDateMouseClicked
 
     private void TitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TitleActionPerformed
-
-    private void CityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CityActionPerformed
-
-    private void ZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ZipCodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ZipCodeActionPerformed
 
     private void bookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookButtonMouseClicked
        
@@ -495,17 +516,38 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void CheckOutDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckOutDateMouseClicked
         //Checkout Date ComboBox Shows Calendar on Mouse Click
-        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar().getTime());
+        JOptionPane.showMessageDialog(rootPane, CheckOutDate.getCalendar()
+                .getTime());
     }//GEN-LAST:event_CheckOutDateMouseClicked
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         this.dispose();
-        //System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    //Action Searchs for Guest by LastName only at this point.
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // opens search screen
-        new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+        /*
+         * Possible options if we do not like the current search and want to 
+         * centralized it to one interface.
+         * opens search screen
+         * new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+        */
+        conn = new GetConnection();
+        conn.getDBConnection();
+        
+        try{
+            name=conn.searchGuests(LastName.getText());
+            names=new String[name.size()];        
+            for (int i = 0; i < name.size(); i++){
+                names[i] = name.get(i);            
+                searchResults.addItem(name.get(i).replace(",", "")
+                    .replace("[", "").replace("]", "").trim());         
+            }  
+        }
+        catch(IllegalArgumentException ex){
+            searchResults.addItem("Not Found");
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -532,19 +574,19 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
         //Get Connection to Database Block       
-        GetConnection gc = new GetConnection();
-        gc.getDBConnection();
+        conn = new GetConnection();
+        conn.getDBConnection();    
         
         //Coverts Selected Index into String       
         String title =String.valueOf(Title.getSelectedIndex());
-        
+       
         //Write Guest Information to the Database
-        gc.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
+        conn.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
                 LastName.getText(),title);
         
         //Converts Selected Index into String
         String state =String.valueOf(State.getSelectedIndex());
-        gc.setGuestAddress(GuestNumber.getText(), Street.getText(), 
+        conn.setGuestAddress(GuestNumber.getText(), Street.getText(), 
                 City.getText(),state, ZipCode.getText()); 
         
         //Gets date set by user
@@ -553,27 +595,32 @@ public class ReservationPage extends javax.swing.JFrame {
         DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
         String inDate=dataBaseFormat.format(date1);      
         String outDate=dataBaseFormat.format(date2);
-        
-        //STILL DEBUGING
-        gc.setReservation("543", "2", GuestNumber.getText(), inDate, outDate, 3.14);
+        String roomSelected=(String) roomsAvailCmbx
+                .getItemAt(roomsAvailCmbx.getSelectedIndex());        
+        conn.setReservation("1244", roomSelected, GuestNumber
+                .getText(), inDate, outDate, 3.14);
               
     }//GEN-LAST:event_bookButtonActionPerformed
+
+    private void ZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ZipCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ZipCodeActionPerformed
+
+    private void CityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CityActionPerformed
    
-    //UNDER CONSTRUCTION
-    public static int reservationNumberGenerator(int n, int []resNumber){
-      
-      return 0;  
-    }
-    private void getNewDate(){
-       
+    private void getNewDate(){       
         //Formating Date to mmm-dd-yyyy
        DateFormat format1=SimpleDateFormat.getDateInstance();     
        
        //Try Catch for Date Comparision
         try{
             //Setting Check In and Checkout Dates
-            date1 = format1.parse(format1.format(CheckInDate.getCalendar().getTime()));
-            date2 = format1.parse(format1.format(CheckOutDate.getCalendar().getTime()));
+            date1 = format1.parse(format1.format(CheckInDate.getCalendar()
+                    .getTime()));
+            date2 = format1.parse(format1.format(CheckOutDate.getCalendar()
+                    .getTime()));
             
             /*
             * Converting the Differance between Days to Long and comparing down 
@@ -661,6 +708,7 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -687,5 +735,6 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JComboBox roomsAvailCmbx;
     private javax.swing.JButton searchButton;
+    private javax.swing.JComboBox searchResults;
     // End of variables declaration//GEN-END:variables
 }
