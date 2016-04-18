@@ -5,8 +5,7 @@
  */
 package views;
 
-import DBCommands.GetConnection;
-import java.util.*;
+
 import javax.swing.*;
 
 /**

@@ -5,6 +5,7 @@
  */
 package DBCommands;
 
+import static java.lang.Math.random;
 import static java.lang.System.out;
 import java.util.*;
 import java.sql.*;
@@ -259,4 +260,33 @@ public class GetConnection{
         }
         return -1;
     }
+    
+    //creates a uniqueID
+    /**
+     * 
+     * @param table the DB Table that you will insert 
+     * @param column Must be the ID column
+     * @return
+     * @throws SQLException 
+
+     */
+    public String uniqueID(String table, String column) throws SQLException{
+        Random random = new Random();
+        Integer newID = random.nextInt(10000000);
+
+        PreparedStatement checkID = null;
+        String sql = "SELECT "+ column +" FROM "+ table +" WHERE "+ column +" = '"+ newID.toString() +"'";
+        try {
+            //if rs!=new id; return newID;
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                uniqueID(table, column);
+            } 
+        } catch(SQLException ex) {
+            showMessageDialog(null, "Could not create ID", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        System.out.println(newID);
+        return newID.toString();
+    }//end uniqueID
 }
