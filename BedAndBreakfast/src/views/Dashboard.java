@@ -5,7 +5,7 @@
  */
 package views;
 
-import DBCommands.GetConnection;
+import DBCommands.DBConnection;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Dashboard extends javax.swing.JFrame {
 
     private String[] rooms;
-    private GetConnection conn;
+    private DBConnection conn;
     private ArrayList<String> results;
     private int roomStatus;
     
@@ -27,7 +27,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();  //
         //
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         //populate roomList

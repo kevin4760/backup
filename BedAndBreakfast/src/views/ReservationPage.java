@@ -5,13 +5,14 @@
 package views;
 
 
-import DBCommands.GetConnection;
+import DBCommands.DBConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
@@ -21,14 +22,14 @@ public class ReservationPage extends javax.swing.JFrame {
     //Global Date Variables
     Date date1,date2;
     private String[] rooms;
-    private GetConnection conn;
+    private DBConnection conn;
     private ArrayList<ArrayList<String>> results;
     private ArrayList<String> name;
     private String[] names;
     public ReservationPage() {
         initComponents();
            
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         results = conn.getresults("select rm_no from rooms order by"
@@ -36,8 +37,7 @@ public class ReservationPage extends javax.swing.JFrame {
         rooms = new String[results.size()];
         for (int i = 0; i < results.size(); i++){
             rooms[i] = results.get(i).get(0);            
-            roomsAvailCmbx.addItem(results.get(i).toString().replace(",", "")
-                .replace("[", "").replace("]", "").trim());         
+            roomsAvailCmbx.addItem((String)rooms[i]);         
         }  
         
     } 
@@ -533,7 +533,7 @@ public class ReservationPage extends javax.swing.JFrame {
          * opens search screen
          * new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
         */
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         try{
@@ -574,7 +574,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
         //Get Connection to Database Block       
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();    
         
         //Coverts Selected Index into String       
