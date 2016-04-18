@@ -522,7 +522,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         this.dispose();
-        System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     //Action Searchs for Guest by LastName only at this point.
