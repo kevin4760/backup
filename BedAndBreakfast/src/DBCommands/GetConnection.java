@@ -5,6 +5,7 @@
  */
 package DBCommands;
 
+import classes.Employee;
 import static java.lang.Math.random;
 import static java.lang.System.out;
 import java.util.*;
@@ -117,6 +118,12 @@ public class GetConnection{
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("did not connect to DB");
         }     
+    }
+    
+    //method get connection string
+    public String returnURL() {
+        String url = "jdbc:oracle:thin:" + "@" + server + ":" + port + ":" +schema;
+        return url;
     }
     
     //method validateUser()

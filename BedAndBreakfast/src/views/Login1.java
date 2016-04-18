@@ -135,7 +135,7 @@ public class Login1 extends javax.swing.JFrame {
         // validates username and password moves to reservation screen
         GetConnection gc = new GetConnection();
         gc.getDBConnection();
-        System.out.println(gc.validateUser(username.getText(), password.getText()));
+//        System.out.println(gc.validateUser(username.getText(), password.getText()));
         if(gc.validateUser(username.getText(), password.getText())){
             new Dashboard().setVisible(rootPaneCheckingEnabled);
             this.setVisible(false);

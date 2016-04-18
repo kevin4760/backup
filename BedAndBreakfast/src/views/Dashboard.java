@@ -133,6 +133,11 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         employee.setText("Employee");
+        employee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeActionPerformed(evt);
+            }
+        });
 
         exitProgram.setText("Exit Program");
         exitProgram.addActionListener(new java.awt.event.ActionListener() {
@@ -460,6 +465,10 @@ public class Dashboard extends javax.swing.JFrame {
             dirty.setSelected(true);
         };
     }//GEN-LAST:event_roomListValueChanged
+
+    private void employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeActionPerformed
+        new EmployeeModule().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_employeeActionPerformed
 
     /**
      * @param args the command line arguments
