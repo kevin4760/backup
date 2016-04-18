@@ -284,7 +284,6 @@ public class GetConnection{
         } catch(SQLException ex) {
             showMessageDialog(null, "Could not create ID", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println(newID);
         return newID.toString();
     }//end uniqueID
 }
