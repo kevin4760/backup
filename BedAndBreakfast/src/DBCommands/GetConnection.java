@@ -5,8 +5,6 @@
  */
 package DBCommands;
 
-import static java.lang.Math.random;
-import static java.lang.System.out;
 import java.util.*;
 import java.sql.*;
 import java.util.logging.Level;
@@ -139,7 +137,7 @@ public class GetConnection{
         }
         return access;        
     }
-    
+    //
     //Set Guest Information Method
     public void setGuestInfo(String guestNumber, String first, 
             String last, String title){
@@ -181,14 +179,32 @@ public class GetConnection{
                     +price+"')";
             stmt=conn.createStatement();
             stmt.executeUpdate(sql);
-            stmt.close();
         }
          catch(SQLException ex) {
             System.out.println(ex);
         }
     }
-   
-    //method returns one value from database
+    
+    //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
+    public ArrayList searchGuests(String lastName){
+        ArrayList<String> name =new ArrayList<>();       
+        try {
+            String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){  
+                name.add(lastName);              
+            } 
+            if(!rs.next()){
+                name.add("Not Found");
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+        return name;
+    }
+    
+     //method returns one value from database
     public int getRoomStatus(String query) {
         int roomStatus = 3; //3 will be invalid input
         try {
@@ -197,7 +213,7 @@ public class GetConnection{
             rs.next();
             roomStatus = Integer.parseInt(rs.getString(1));
         } catch(SQLException ex) {
-            out.println(ex);
+            System.out.println(ex);
         }
         return roomStatus;
     }
@@ -215,6 +231,7 @@ public class GetConnection{
             }
             rs.close();
             stmt.close();
+           
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -238,7 +255,7 @@ public class GetConnection{
                 record = new ArrayList<>();
             }
             rs.close();
-            stmt.close();
+            stmt.close();            
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
@@ -252,9 +269,9 @@ public class GetConnection{
                 rs = stmt.getResultSet();
             } else {
                 return stmt.getUpdateCount();
-            }            
+            }   
             rs.close();
-            stmt.close();
+            stmt.close();            
         } catch (SQLException ex){
             return -1;
         }
@@ -286,4 +303,5 @@ public class GetConnection{
         }
         return newID.toString();
     }//end uniqueID
+    
 }
