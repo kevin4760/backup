@@ -268,13 +268,11 @@ public class GetConnection{
      * @param column Must be the ID column
      * @return
      * @throws SQLException 
-
      */
     public String uniqueID(String table, String column) throws SQLException{
         Random random = new Random();
         Integer newID = random.nextInt(10000000);
-
-        PreparedStatement checkID = null;
+        
         String sql = "SELECT "+ column +" FROM "+ table +" WHERE "+ column +" = '"+ newID.toString() +"'";
         try {
             //if rs!=new id; return newID;
@@ -286,7 +284,6 @@ public class GetConnection{
         } catch(SQLException ex) {
             showMessageDialog(null, "Could not create ID", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println(newID);
         return newID.toString();
     }//end uniqueID
 }
