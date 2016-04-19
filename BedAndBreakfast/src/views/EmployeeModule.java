@@ -6,7 +6,6 @@
 package views;
 
 import DBCommands.EmployeeDAO;
-import DBCommands.GetConnection;
 import classes.Employee;
 import java.sql.SQLException;
 import java.util.logging.Level;

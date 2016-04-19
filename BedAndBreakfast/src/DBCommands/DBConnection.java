@@ -5,24 +5,22 @@
  */
 package DBCommands;
 
-import classes.Employee;
-import static java.lang.Math.random;
-import static java.lang.System.out;
 import java.util.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
- * GetConnection.java
+ * DBConnection.java
  * @author Kevin
  * @modification Prasanna
  * creates a DB Connection for the specific database in the String 
  * URL.  This connection string must be manually changed as of right now
  */
-public class GetConnection{
+public class DBConnection{
     private Connection conn;
 //    private Properties connectionProps;
     private String username;
@@ -36,7 +34,7 @@ public class GetConnection{
    
     
     //constructors
-    public GetConnection(String username, String password, String schema, String server, int port) {
+    public DBConnection(String username, String password, String schema, String server, int port) {
         this.username = username;
         this.password = password;
         this.schema = schema;
@@ -48,7 +46,7 @@ public class GetConnection{
     }
     //constructor to call kevins db connection
     //constructors
-    public GetConnection() {
+    public DBConnection() {
         this.username = "bbpms";
         this.password = "bbpms";
         this.schema = "orcl";
@@ -58,7 +56,7 @@ public class GetConnection{
 //        connectionProps.put("user", username);
 //        connectionProps.put("password", password);
     }
-    public GetConnection(int x){
+    public DBConnection(int x){
         if(x == 5) {
             this.username = "system";
             this.password = "ANK22dec2010!!";
@@ -120,12 +118,6 @@ public class GetConnection{
         }     
     }
     
-    //method get connection string
-    public String returnURL() {
-        String url = "jdbc:oracle:thin:" + "@" + server + ":" + port + ":" +schema;
-        return url;
-    }
-    
     //method validateUser()
     public Boolean validateUser(String username, String password) {
         
@@ -140,13 +132,13 @@ public class GetConnection{
                 rs.close();
             } else 
                 access = false;
-                rs.close();
+            rs.close();
         } catch(SQLException ex) {
             System.out.println(ex);
         }
         return access;        
     }
-    
+    //
     //Set Guest Information Method
     public void setGuestInfo(String guestNumber, String first, 
             String last, String title){
@@ -188,14 +180,32 @@ public class GetConnection{
                     +price+"')";
             stmt=conn.createStatement();
             stmt.executeUpdate(sql);
-            stmt.close();
         }
          catch(SQLException ex) {
             System.out.println(ex);
         }
     }
-   
-    //method returns one value from database
+    
+    //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
+    public ArrayList<String> searchGuests(String lastName){
+        ArrayList<String> name =new ArrayList<>();       
+        try {
+            String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){  
+                name.add(lastName);              
+            } 
+            if(!rs.next()){
+                name.add("Not Found");
+            }
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+        return name;
+    }
+    
+     //method returns one value from database
     public int getRoomStatus(String query) {
         int roomStatus = 3; //3 will be invalid input
         try {
@@ -204,13 +214,13 @@ public class GetConnection{
             rs.next();
             roomStatus = Integer.parseInt(rs.getString(1));
         } catch(SQLException ex) {
-            out.println(ex);
+            System.out.println(ex);
         }
         return roomStatus;
     }
     
     //method getResults(), Prasana returning DB info to ArrayList
-    public ArrayList getresults(String query, int column_size){
+    public ArrayList <String> getresults(String query, int column_size){
         ArrayList<String> records = new ArrayList<>();
         try {
             stmt = conn.createStatement();
@@ -222,6 +232,7 @@ public class GetConnection{
             }
             rs.close();
             stmt.close();
+           
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -245,7 +256,7 @@ public class GetConnection{
                 record = new ArrayList<>();
             }
             rs.close();
-            stmt.close();
+            stmt.close();            
         } catch (SQLException ex) {
             showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } 
@@ -259,9 +270,9 @@ public class GetConnection{
                 rs = stmt.getResultSet();
             } else {
                 return stmt.getUpdateCount();
-            }            
+            }   
             rs.close();
-            stmt.close();
+            stmt.close();            
         } catch (SQLException ex){
             return -1;
         }
@@ -293,4 +304,5 @@ public class GetConnection{
         }
         return newID.toString();
     }//end uniqueID
+    
 }

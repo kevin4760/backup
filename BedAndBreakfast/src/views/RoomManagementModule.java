@@ -5,7 +5,7 @@
  */
 package views;
 
-import DBCommands.GetConnection;
+import DBCommands.DBConnection;
 import java.util.ArrayList;
 
 /**
@@ -15,14 +15,14 @@ import java.util.ArrayList;
  */
 public class RoomManagementModule extends javax.swing.JFrame {
     private String[] rooms;
-    private GetConnection conn;
+    private DBConnection conn;
     private ArrayList<ArrayList<String>> results;
     /**
      * Creates new form RoomManagementModule
      */
     public RoomManagementModule() {
         initComponents();
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         results = conn.getresults("select rm_no,clean from rooms");
         rooms = new String[results.size()];
@@ -32,10 +32,10 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jList1.setListData((String[])rooms);
         jComboBoxRoomSelector.removeAllItems();
         for (String j : rooms){
-               jComboBoxRoomSelector.addItem(j);
+            jComboBoxRoomSelector.addItem(j);
         }
     }
-    public RoomManagementModule(GetConnection conn) {
+    public RoomManagementModule(DBConnection conn) {
         initComponents();
         this.conn = conn;
         conn.getDBConnection();
