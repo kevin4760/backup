@@ -26,8 +26,7 @@ public class EmployeeDAO {
     //final variables
     private final String dbTable = "employees";
 
-      
-    
+
     //connection
     GetConnection gc = new GetConnection();
     
