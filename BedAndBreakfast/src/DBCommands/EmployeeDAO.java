@@ -28,7 +28,7 @@ public class EmployeeDAO {
 
 
     //connection
-    GetConnection gc = new GetConnection();
+    DBConnection gc = new DBConnection();
     
     //create employee
     /**
