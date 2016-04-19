@@ -187,7 +187,7 @@ public class DBConnection{
     }
     
     //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
-    public ArrayList searchGuests(String lastName){
+    public ArrayList<String> searchGuests(String lastName){
         ArrayList<String> name =new ArrayList<>();       
         try {
             String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";

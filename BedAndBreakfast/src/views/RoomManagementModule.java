@@ -32,7 +32,7 @@ public class RoomManagementModule extends javax.swing.JFrame {
         jList1.setListData((String[])rooms);
         jComboBoxRoomSelector.removeAllItems();
         for (String j : rooms){
-               jComboBoxRoomSelector.addItem(j);
+            jComboBoxRoomSelector.addItem(j);
         }
     }
     public RoomManagementModule(DBConnection conn) {
