@@ -45,6 +45,9 @@ public class EmployeeDAO {
     public Employee createEmployee(String firstName, String lastName, String employeeID, String userName, String password) {
         return new Employee(firstName, lastName, employeeID, userName, password);
     }
+    /*
+    hi
+    */
     
     //insert employee
     public void insertEmployee(Employee employee) throws SQLException {
