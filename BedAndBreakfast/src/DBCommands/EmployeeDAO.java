@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author Kevin
@@ -26,10 +28,9 @@ public class EmployeeDAO {
     //final variables
     private final String dbTable = "employees";
 
-      
-    
+
     //connection
-    GetConnection gc = new GetConnection();
+    DBConnection gc = new DBConnection();
     
     //create employee
     /**
@@ -76,12 +77,16 @@ public class EmployeeDAO {
             ResultSetMetaData rsmd = rs.getMetaData();
             int columns = rsmd.getColumnCount();
 //            System.out.println(rs.next()); //testing line delete
+            if(!rs.next()) {
+                showMessageDialog(null, "Nothing Found", "Search", JOptionPane.INFORMATION_MESSAGE);
+            }
             while(rs.next()) {
                 for (int i =1; i<= columns; i++){
                     System.out.print(rs.getString(i)+" ");
                 }
                 System.out.println();
             }
+            
                 
         } catch(SQLException ex) {
             System.out.println("whoops"); //replace with a real exception
