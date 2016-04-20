@@ -27,6 +27,7 @@ public class EmployeeDAO {
     //variables
     private Statement stmt;
     private ResultSet rs;
+    private PreparedStatement ps;
     
     //final variables
     private final String dbTable = "employees";
@@ -57,15 +58,16 @@ public class EmployeeDAO {
     public void insertEmployee(Employee employee) {
         gc.getDBConnection();
         try {
-            PreparedStatement insertRecord = gc.getConn().prepareStatement
+            ps = gc.getConn().prepareStatement
                 ("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?)");
-            insertRecord.setString(1, employee.getEmployeeID());
-            insertRecord.setString(2, employee.getHotelID());
-            insertRecord.setString(3, employee.getLastName());
-            insertRecord.setString(4, employee.getFirstName());
-            insertRecord.setString(5, employee.getUserName());
-            insertRecord.setString(6, employee.getPassword());
-            insertRecord.execute();
+            ps.setString(1, employee.getEmployeeID());
+            ps.setString(2, employee.getHotelID());
+            ps.setString(3, employee.getLastName());
+            ps.setString(4, employee.getFirstName());
+            ps.setString(5, employee.getUserName());
+            ps.setString(6, employee.getPassword());
+            ps.execute();
+            showMessageDialog(null, "Employee added: "+employee.getLastName()+", "+employee.getFirstName(),"Record Added", JOptionPane.INFORMATION_MESSAGE);
             gc.getConn().close();
         } catch(SQLException ex) {
             
@@ -110,22 +112,37 @@ public class EmployeeDAO {
         return empList;
     }
     
-//    //Update Employee
-//    public void updateEmployee () {
-//        gc.getDBConnection();
-//        try {
-//            PreparedStatement insertRecord = gc.getConn().prepareStatement
-//                ("UPDATE employees SET e");
-//            insertRecord.setString(1, employee.getEmployeeID());
-//            insertRecord.setString(2, employee.getHotelID());
-//            insertRecord.setString(3, employee.getLastName());
-//            insertRecord.setString(4, employee.getFirstName());
-//            insertRecord.setString(5, employee.getUserName());
-//            insertRecord.setString(6, employee.getPassword());
-//            insertRecord.execute();
-//        } catch(SQLException ex) {
-//            
-//        }
-//    }
+    //Update Employee
+    public void updateEmployee (Employee employee) {
+        gc.getDBConnection();
+        try {
+            ps = gc.getConn().prepareStatement("UPDATE employees SET hotel_id=?, last_name=?, first_name=?, user_name=?, password=? WHERE emp_id=?" );
+            ps.setString(1, employee.getHotelID());
+            ps.setString(2, employee.getLastName());
+            ps.setString(3, employee.getFirstName());
+            ps.setString(4, employee.getUserName());
+            ps.setString(5, employee.getPassword());
+            ps.setString(6, employee.getEmployeeID());
+
+            ps.executeQuery();
+            gc.getConn().close();
+            showMessageDialog(null, "Employee Updated: "+employee.getLastName()+", "+employee.getFirstName(),"Record Update", JOptionPane.INFORMATION_MESSAGE);
+        } catch(SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//end updateEmployee()
     
+    //delete employee
+    public void deleteEmployee(String empID) {
+        gc.getDBConnection();
+        try{
+            ps = gc.getConn().prepareStatement("DELETE FROM employees WHERE emp_id=?" );
+            ps.setString(1, empID);
+            ps.executeQuery();
+            gc.getConn().close();
+            showMessageDialog(null, "Employee Record Deleted: "+ empID, "Record Deleted", JOptionPane.INFORMATION_MESSAGE);
+        } catch(SQLException ex){
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);  
+        }
+    }
 }
