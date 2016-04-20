@@ -61,13 +61,14 @@ public class EmployeeModule extends javax.swing.JFrame {
         hotelid = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         search = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
         addEmployee = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        clear = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
         searchResults = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -176,7 +177,12 @@ public class EmployeeModule extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Exit");
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         addEmployee.setText("Add");
         addEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -185,18 +191,26 @@ public class EmployeeModule extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Remove");
-
-        jButton6.setText("Edit");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
-        jButton7.setText("Update");
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Clear");
+        clear.setText("Clear");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Tools");
@@ -207,35 +221,43 @@ public class EmployeeModule extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(addEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(search, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+            .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(search)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addEmployee)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(update)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(clear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(28, 28, 28))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exit)
+                .addGap(20, 20, 20))
         );
 
+        searchResults.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                searchResultsItemStateChanged(evt);
+            }
+        });
         searchResults.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchResultsActionPerformed(evt);
@@ -295,11 +317,12 @@ public class EmployeeModule extends javax.swing.JFrame {
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         //setup removes all previous items and clears ArrayList
-        searchResults.removeAllItems();
+        
+        //had search results reset here
+         searchResults.removeAllItems();
         if(empList.isEmpty()==false){
             empList.clear();
         }
-        
         //send all searchable values to search method, returns an array
         empList = eDAO.searchEmp(first.getText(), last.getText(), id.getText(), username.getText(), hotelid.getText());
         //iterate through search results and add to drop down
@@ -314,10 +337,6 @@ public class EmployeeModule extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     private void searchResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResultsActionPerformed
         //get selected item from search list and sets the employee
         emp = empList.get(searchResults.getSelectedIndex());
@@ -328,8 +347,35 @@ public class EmployeeModule extends javax.swing.JFrame {
         username.setText(emp.getUserName());
         hotelid.setText(emp.getHotelID());
         
-        
     }//GEN-LAST:event_searchResultsActionPerformed
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        emp.setFirstName(first.getText());
+        emp.setLastName(last.getText());
+        emp.setEmployeeID(id.getText());
+        emp.setHotelID(hotelid.getText());
+        emp.setUserName(username.getText());
+        if(!password.getText().isEmpty()||!password.getText().equalsIgnoreCase(" ")){
+            emp.setPassword(password.getText());
+        }
+        eDAO.updateEmployee(emp);
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void searchResultsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_searchResultsItemStateChanged
+
+    }//GEN-LAST:event_searchResultsItemStateChanged
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_clearActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        eDAO.deleteEmployee(id.getText());
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,14 +414,12 @@ public class EmployeeModule extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEmployee;
+    private javax.swing.JButton clear;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton exit;
     private javax.swing.JTextField first;
     private javax.swing.JTextField hotelid;
     private javax.swing.JTextField id;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -388,10 +432,30 @@ public class EmployeeModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField last;
     private javax.swing.JTextField password;
     private javax.swing.JButton search;
     private javax.swing.JComboBox searchResults;
+    private javax.swing.JButton update;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
+
+    private void clearForm() {
+        try{
+        first.setText(null);
+        last.setText(null);
+        id.setText(null);
+        hotelid.setText(null);
+        username.setText(null);
+        password.setText(null);
+        if(empList.isEmpty()==false){
+            empList.clear();
+        }
+        searchResults.removeAllItems();
+        } catch(Exception ex) {
+            Logger.getLogger(EmployeeModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
