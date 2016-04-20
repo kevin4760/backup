@@ -29,14 +29,9 @@ public class EmployeeDAO {
     private ResultSet rs;
     private PreparedStatement ps;
     
-    //final variables
-    private final String dbTable = "employees";
-
-
     //connection
     DBConnection gc = new DBConnection();
     
-    //create employee
     /**
      * 
      * @param firstName
@@ -46,9 +41,6 @@ public class EmployeeDAO {
      * @param password
      * @return 
      */
-//    public Employee createEmployee(String firstName, String lastName, String employeeID, String userName, String password) {
-//        return new Employee(firstName, lastName, employeeID, userName, password);
-//    }
 
     //insert employee
     /**
@@ -66,7 +58,7 @@ public class EmployeeDAO {
             ps.setString(4, employee.getFirstName());
             ps.setString(5, employee.getUserName());
             ps.setString(6, employee.getPassword());
-            ps.execute();
+            ps.executeQuery();
             showMessageDialog(null, "Employee added: "+employee.getLastName()+", "+employee.getFirstName(),"Record Added", JOptionPane.INFORMATION_MESSAGE);
             gc.getConn().close();
         } catch(SQLException ex) {
@@ -99,6 +91,7 @@ public class EmployeeDAO {
             stmt = gc.getConn().createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
+                //adds a new employee to the ArrayList empList
                 empList.add(new Employee(rs.getString(4),rs.getString(3),rs.getString(1),rs.getString(5),rs.getString(6)));
             }//end while
         } catch(SQLException ex) {
@@ -109,6 +102,7 @@ public class EmployeeDAO {
 //        for(int i=0; i<empList.size(); i++){
 //            System.out.println("while: " + empList.get(i));
 //        }//TESTING ITEM END
+        //returns the populated or empty ArrayList
         return empList;
     }
     
