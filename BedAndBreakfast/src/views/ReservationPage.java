@@ -79,13 +79,13 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        searchResults = new javax.swing.JComboBox<>();
+        searchResults = new javax.swing.JComboBox<String>();
         jLabel15 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         NumberOfNights = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        roomsAvailCmbx = new javax.swing.JComboBox<>();
+        roomsAvailCmbx = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         clearButton = new javax.swing.JButton();
@@ -264,6 +264,12 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Address Information");
+
+        searchResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchResultsActionPerformed(evt);
+            }
+        });
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Search Results");
@@ -610,6 +616,10 @@ public class ReservationPage extends javax.swing.JFrame {
     private void CityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CityActionPerformed
+
+    private void searchResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResultsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchResultsActionPerformed
    
     private void getNewDate(){       
         //Formating Date to mmm-dd-yyyy

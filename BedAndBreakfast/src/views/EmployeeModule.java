@@ -7,9 +7,10 @@ package views;
 
 import DBCommands.EmployeeDAO;
 import classes.Employee;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import java.util.*;
 
 /**
  *
@@ -18,7 +19,12 @@ import java.util.logging.Logger;
 public class EmployeeModule extends javax.swing.JFrame {
     
     //Employee Data Access Object
-    EmployeeDAO emp = new EmployeeDAO();
+    private final EmployeeDAO eDAO = new EmployeeDAO();
+    //Employee Object
+    private Employee emp = new Employee();
+    //Employee ArrayList to hold search information
+    private ArrayList<Employee> empList = new ArrayList<>();
+    
     
     /**
      * Creates new form EmployeeModule
@@ -39,8 +45,6 @@ public class EmployeeModule extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        employeeList = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
         first = new javax.swing.JTextField();
         last = new javax.swing.JTextField();
@@ -56,7 +60,7 @@ public class EmployeeModule extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         hotelid = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        search = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         addEmployee = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -64,15 +68,13 @@ public class EmployeeModule extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        searchResults = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Employee Manager");
-
-        employeeList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jScrollPane1.setViewportView(employeeList);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -167,10 +169,10 @@ public class EmployeeModule extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                searchActionPerformed(evt);
             }
         });
 
@@ -186,6 +188,11 @@ public class EmployeeModule extends javax.swing.JFrame {
         jButton3.setText("Remove");
 
         jButton6.setText("Edit");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Update");
 
@@ -199,7 +206,7 @@ public class EmployeeModule extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(addEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(search, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +220,7 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(search)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addEmployee)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -229,6 +236,12 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addGap(28, 28, 28))
         );
 
+        searchResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchResultsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -239,9 +252,9 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchResults, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +265,9 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(searchResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,19 +287,49 @@ public class EmployeeModule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeActionPerformed
-
+        
         Employee bob = new Employee(first.getText(), last.getText(), id.getText(), 
                 username.getText(), password.getText());        
-        try {
-            emp.insertEmployee(bob);
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeModule.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            eDAO.insertEmployee(bob);
     }//GEN-LAST:event_addEmployeeActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        emp.searchEmp(first.getText(), last.getText(), id.getText(), username.getText(), hotelid.getText());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        //setup removes all previous items and clears ArrayList
+        searchResults.removeAllItems();
+        if(empList.isEmpty()==false){
+            empList.clear();
+        }
+        
+        //send all searchable values to search method, returns an array
+        empList = eDAO.searchEmp(first.getText(), last.getText(), id.getText(), username.getText(), hotelid.getText());
+        //iterate through search results and add to drop down
+        try{
+            for (int i = 0; i < empList.size(); i++){
+                emp = empList.get(i);
+                searchResults.addItem(emp.getLastName()+", "+emp.getFirstName());
+            }  
+        }
+        catch(IllegalArgumentException ex){
+            searchResults.addItem("Not Found");
+        }
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void searchResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResultsActionPerformed
+        //get selected item from search list and sets the employee
+        emp = empList.get(searchResults.getSelectedIndex());
+        //display information to form
+        first.setText(emp.getFirstName());
+        last.setText(emp.getLastName());
+        id.setText(emp.getEmployeeID());
+        username.setText(emp.getUserName());
+        hotelid.setText(emp.getHotelID());
+        
+        
+    }//GEN-LAST:event_searchResultsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,11 +368,9 @@ public class EmployeeModule extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEmployee;
-    private javax.swing.JList employeeList;
     private javax.swing.JTextField first;
     private javax.swing.JTextField hotelid;
     private javax.swing.JTextField id;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -345,9 +388,10 @@ public class EmployeeModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField last;
     private javax.swing.JTextField password;
+    private javax.swing.JButton search;
+    private javax.swing.JComboBox searchResults;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
