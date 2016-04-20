@@ -6,14 +6,15 @@ package views;
 
 
 import DBCommands.DBConnection;
+import DBCommands.GuestDAO;
+import classes.Guest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author Aaron
@@ -21,11 +22,17 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class ReservationPage extends javax.swing.JFrame {
     //Global Date Variables
     private Date date1,date2;
-    private String[] rooms;
+    private final String[] rooms;
     private DBConnection conn;
-    private ArrayList<ArrayList<String>> results;
-    private ArrayList<String> name;
-    private String[] names;
+    private final ArrayList<ArrayList<String>> results;
+    
+      //Employee Data Access Object
+    private final GuestDAO gDAO = new GuestDAO();
+    //Employee Object
+    private final Guest guest = new Guest();
+    //Employee ArrayList to hold search information
+    private final ArrayList<Guest> guestList = new ArrayList<>();
+    
     public ReservationPage() {
         initComponents();
            
@@ -63,24 +70,22 @@ public class ReservationPage extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        LastName = new javax.swing.JTextField();
-        FirstName = new javax.swing.JTextField();
-        Title = new javax.swing.JComboBox();
+        lastName = new javax.swing.JTextField();
+        firstName = new javax.swing.JTextField();
+        title = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        GuestNumber = new javax.swing.JTextField();
+        guestNumber = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        Street = new javax.swing.JTextField();
-        City = new javax.swing.JTextField();
-        ZipCode = new javax.swing.JTextField();
-        State = new javax.swing.JComboBox();
+        street = new javax.swing.JTextField();
+        city = new javax.swing.JTextField();
+        zipCode = new javax.swing.JTextField();
+        state = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        searchResults = new javax.swing.JComboBox<String>();
-        jLabel15 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         NumberOfNights = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -157,10 +162,10 @@ public class ReservationPage extends javax.swing.JFrame {
 
         jLabel3.setText("First");
 
-        Title.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dr.", "Mr.", "Mrs.", "Miss.", "Jr." }));
-        Title.addActionListener(new java.awt.event.ActionListener() {
+        title.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dr.", "Mr.", "Mrs.", "Miss.", "Jr." }));
+        title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TitleActionPerformed(evt);
+                titleActionPerformed(evt);
             }
         });
 
@@ -178,19 +183,19 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(FirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GuestNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(guestNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LastName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -199,16 +204,16 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(FirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GuestNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(guestNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(LastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -235,19 +240,19 @@ public class ReservationPage extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        City.addActionListener(new java.awt.event.ActionListener() {
+        city.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CityActionPerformed(evt);
+                cityActionPerformed(evt);
             }
         });
 
-        ZipCode.addActionListener(new java.awt.event.ActionListener() {
+        zipCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ZipCodeActionPerformed(evt);
+                zipCodeActionPerformed(evt);
             }
         });
 
-        State.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", " " }));
+        state.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", " " }));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Street");
@@ -265,15 +270,6 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Address Information");
 
-        searchResults.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchResultsActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Search Results");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -287,16 +283,12 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(City, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Street, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(street, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(ZipCode, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(State, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchResults, 0, 141, Short.MAX_VALUE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31))
+                        .addComponent(zipCode, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(state, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(31, 353, Short.MAX_VALUE))
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -305,21 +297,19 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Street, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel15))
+                    .addComponent(street, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(City, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(searchResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ZipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zipCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -514,9 +504,9 @@ public class ReservationPage extends javax.swing.JFrame {
                 .getTime());
     }//GEN-LAST:event_CheckInDateMouseClicked
 
-    private void TitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitleActionPerformed
+    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TitleActionPerformed
+    }//GEN-LAST:event_titleActionPerformed
 
     private void bookButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookButtonMouseClicked
        
@@ -530,31 +520,13 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         this.dispose();
-        //System.exit(0);
+       
     }//GEN-LAST:event_exitButtonActionPerformed
 
     //Action Searchs for Guest by LastName only at this point.
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        /*
-         * Possible options if we do not like the current search and want to 
-         * centralized it to one interface.
-         * opens search screen
-         * new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
-        */
-        conn = new DBConnection();
-        conn.getDBConnection();
-        
-        try{
-            name=conn.searchGuests(LastName.getText());
-            names=new String[name.size()];        
-            for (int i = 0; i < name.size(); i++){
-                names[i] = name.get(i);            
-                searchResults.addItem(names[i]);         
-            }  
-        }
-        catch(IllegalArgumentException ex){
-            searchResults.addItem("Not Found");
-        }
+    
+        new GuestSearchModule().setVisible(rootPaneCheckingEnabled); 
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -565,36 +537,22 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         //Resets all the Fields
-        FirstName.setText(null);
-        LastName.setText(null);
-        Street.setText(null);
-        City.setText(null);
-        ZipCode.setText(null);
+        firstName.setText(null);
+        lastName.setText(null);
+        street.setText(null);
+        city.setText(null);
+        zipCode.setText(null);
         NumberOfNights.setText(null);
-        GuestNumber.setText(null);
-        Title.setSelectedIndex(0);
+        guestNumber.setText(null);
+        title.setSelectedIndex(0);
         roomsAvailCmbx.setSelectedIndex(0);
-        State.setSelectedIndex(0);
+        state.setSelectedIndex(0);
         CheckInDate.setDate(new Date());
         CheckOutDate.setDate(new Date());        
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
-        //Get Connection to Database Block       
-        conn = new DBConnection();
-        conn.getDBConnection();    
         
-        //Coverts Selected Index into String       
-        String title =String.valueOf(Title.getSelectedIndex());
-       
-        //Write Guest Information to the Database
-        conn.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
-                LastName.getText(),title);
-        
-        //Converts Selected Index into String
-        String state =String.valueOf(State.getSelectedIndex());
-        conn.setGuestAddress(GuestNumber.getText(), Street.getText(), 
-                City.getText(),state, ZipCode.getText()); 
         
         //Gets date set by user
         getNewDate();  
@@ -604,22 +562,17 @@ public class ReservationPage extends javax.swing.JFrame {
         String outDate=dataBaseFormat.format(date2);
         String roomSelected=(String) roomsAvailCmbx
                 .getItemAt(roomsAvailCmbx.getSelectedIndex());        
-        conn.setReservation("1244", roomSelected, GuestNumber
-                .getText(), inDate, outDate, 3.14);
+      
               
     }//GEN-LAST:event_bookButtonActionPerformed
 
-    private void ZipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ZipCodeActionPerformed
+    private void zipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ZipCodeActionPerformed
+    }//GEN-LAST:event_zipCodeActionPerformed
 
-    private void CityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CityActionPerformed
+    private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CityActionPerformed
-
-    private void searchResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResultsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchResultsActionPerformed
+    }//GEN-LAST:event_cityActionPerformed
    
     private void getNewDate(){       
         //Formating Date to mmm-dd-yyyy
@@ -701,25 +654,19 @@ public class ReservationPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.wannawork.jcalendar.JCalendarComboBox CheckInDate;
     private de.wannawork.jcalendar.JCalendarComboBox CheckOutDate;
-    private javax.swing.JTextField City;
-    private javax.swing.JTextField FirstName;
-    private javax.swing.JTextField GuestNumber;
-    private javax.swing.JTextField LastName;
     private javax.swing.JTextField NumberOfNights;
-    private javax.swing.JComboBox State;
-    private javax.swing.JTextField Street;
-    private javax.swing.JComboBox Title;
-    private javax.swing.JTextField ZipCode;
     private javax.swing.JButton bookButton;
+    private javax.swing.JTextField city;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton exitButton;
+    private javax.swing.JTextField firstName;
+    private javax.swing.JTextField guestNumber;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -744,8 +691,12 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField lastName;
     private javax.swing.JComboBox<String> roomsAvailCmbx;
     private javax.swing.JButton searchButton;
-    private javax.swing.JComboBox<String> searchResults;
+    private javax.swing.JComboBox state;
+    private javax.swing.JTextField street;
+    private javax.swing.JComboBox title;
+    private javax.swing.JTextField zipCode;
     // End of variables declaration//GEN-END:variables
 }
