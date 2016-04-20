@@ -11,15 +11,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
- * GetConnection.java
+ * DBConnection.java
  * @author Kevin
  * @modification Prasanna
  * creates a DB Connection for the specific database in the String 
  * URL.  This connection string must be manually changed as of right now
  */
-public class GetConnection{
+public class DBConnection{
     private Connection conn;
 //    private Properties connectionProps;
     private String username;
@@ -33,7 +34,7 @@ public class GetConnection{
    
     
     //constructors
-    public GetConnection(String username, String password, String schema, String server, int port) {
+    public DBConnection(String username, String password, String schema, String server, int port) {
         this.username = username;
         this.password = password;
         this.schema = schema;
@@ -45,7 +46,7 @@ public class GetConnection{
     }
     //constructor to call kevins db connection
     //constructors
-    public GetConnection() {
+    public DBConnection() {
         this.username = "bbpms";
         this.password = "bbpms";
         this.schema = "orcl";
@@ -55,7 +56,7 @@ public class GetConnection{
 //        connectionProps.put("user", username);
 //        connectionProps.put("password", password);
     }
-    public GetConnection(int x){
+    public DBConnection(int x){
         if(x == 5) {
             this.username = "system";
             this.password = "ANK22dec2010!!";
@@ -131,7 +132,7 @@ public class GetConnection{
                 rs.close();
             } else 
                 access = false;
-                rs.close();
+            rs.close();
         } catch(SQLException ex) {
             System.out.println(ex);
         }
@@ -186,7 +187,7 @@ public class GetConnection{
     }
     
     //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
-    public ArrayList searchGuests(String lastName){
+    public ArrayList<String> searchGuests(String lastName){
         ArrayList<String> name =new ArrayList<>();       
         try {
             String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";
@@ -219,7 +220,7 @@ public class GetConnection{
     }
     
     //method getResults(), Prasana returning DB info to ArrayList
-    public ArrayList getresults(String query, int column_size){
+    public ArrayList <String> getresults(String query, int column_size){
         ArrayList<String> records = new ArrayList<>();
         try {
             stmt = conn.createStatement();

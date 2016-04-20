@@ -43,7 +43,7 @@ public class BedAndBreakfast {
 //        rmManageModule.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        rmManageModule.setVisible(true);
         
-        Login1 login = new Login1();
+        LoginPage login = new LoginPage();
         login.pack();
         login.setTitle("Login");
         login.setLocationRelativeTo(null);

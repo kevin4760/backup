@@ -5,7 +5,7 @@
 package views;
 
 
-import DBCommands.GetConnection;
+import DBCommands.DBConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,22 +13,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
  * @author Aaron
  */
 public class ReservationPage extends javax.swing.JFrame {
     //Global Date Variables
-    Date date1,date2;
+    private Date date1,date2;
     private String[] rooms;
-    private GetConnection conn;
+    private DBConnection conn;
     private ArrayList<ArrayList<String>> results;
     private ArrayList<String> name;
     private String[] names;
     public ReservationPage() {
         initComponents();
            
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         results = conn.getresults("select rm_no from rooms order by"
@@ -36,10 +37,11 @@ public class ReservationPage extends javax.swing.JFrame {
         rooms = new String[results.size()];
         for (int i = 0; i < results.size(); i++){
             rooms[i] = results.get(i).get(0);            
-            roomsAvailCmbx.addItem(results.get(i).toString().replace(",", "")
-                .replace("[", "").replace("]", "").trim());         
+//            roomsAvailCmbx.addItem(rooms[i]); 
         }  
-        
+        for (String j : rooms){
+            roomsAvailCmbx.addItem(j);
+        }
     } 
 
     /**
@@ -77,13 +79,13 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        searchResults = new javax.swing.JComboBox();
+        searchResults = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         NumberOfNights = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        roomsAvailCmbx = new javax.swing.JComboBox();
+        roomsAvailCmbx = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         clearButton = new javax.swing.JButton();
@@ -366,9 +368,9 @@ public class ReservationPage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(roomsAvailCmbx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         clearButton.setText("Clear");
@@ -522,7 +524,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         this.dispose();
-        System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     //Action Searchs for Guest by LastName only at this point.
@@ -533,7 +535,7 @@ public class ReservationPage extends javax.swing.JFrame {
          * opens search screen
          * new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
         */
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         try{
@@ -541,8 +543,7 @@ public class ReservationPage extends javax.swing.JFrame {
             names=new String[name.size()];        
             for (int i = 0; i < name.size(); i++){
                 names[i] = name.get(i);            
-                searchResults.addItem(name.get(i).replace(",", "")
-                    .replace("[", "").replace("]", "").trim());         
+                searchResults.addItem(names[i]);         
             }  
         }
         catch(IllegalArgumentException ex){
@@ -574,7 +575,7 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
         //Get Connection to Database Block       
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();    
         
         //Coverts Selected Index into String       
@@ -733,8 +734,8 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JComboBox roomsAvailCmbx;
+    private javax.swing.JComboBox<String> roomsAvailCmbx;
     private javax.swing.JButton searchButton;
-    private javax.swing.JComboBox searchResults;
+    private javax.swing.JComboBox<String> searchResults;
     // End of variables declaration//GEN-END:variables
 }

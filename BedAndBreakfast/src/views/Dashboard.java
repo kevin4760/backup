@@ -5,7 +5,7 @@
  */
 package views;
 
-import DBCommands.GetConnection;
+import DBCommands.DBConnection;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Dashboard extends javax.swing.JFrame {
 
     private String[] rooms;
-    private GetConnection conn;
+    private DBConnection conn;
     private ArrayList<String> results;
     private int roomStatus;
     
@@ -27,7 +27,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();  //
         //
-        conn = new GetConnection();
+        conn = new DBConnection();
         conn.getDBConnection();
         
         //populate roomList
@@ -133,6 +133,11 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         employee.setText("Employee");
+        employee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeActionPerformed(evt);
+            }
+        });
 
         exitProgram.setText("Exit Program");
         exitProgram.addActionListener(new java.awt.event.ActionListener() {
@@ -460,6 +465,10 @@ public class Dashboard extends javax.swing.JFrame {
             dirty.setSelected(true);
         };
     }//GEN-LAST:event_roomListValueChanged
+
+    private void employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeActionPerformed
+        new EmployeeModule().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_employeeActionPerformed
 
     /**
      * @param args the command line arguments
