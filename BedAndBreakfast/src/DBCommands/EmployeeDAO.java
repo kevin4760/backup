@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -42,56 +45,87 @@ public class EmployeeDAO {
      * @param password
      * @return 
      */
-    public Employee createEmployee(String firstName, String lastName, String employeeID, String userName, String password) {
-        return new Employee(firstName, lastName, employeeID, userName, password);
-    }
-    
+//    public Employee createEmployee(String firstName, String lastName, String employeeID, String userName, String password) {
+//        return new Employee(firstName, lastName, employeeID, userName, password);
+//    }
+
     //insert employee
-    public void insertEmployee(Employee employee) throws SQLException {
+    /**
+     * Inserts new employee into database
+     * @param employee 
+     */
+    public void insertEmployee(Employee employee) {
         gc.getDBConnection();
-        PreparedStatement insertRecord = gc.getConn().prepareStatement
-            ("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?)");
-        insertRecord.setString(1, employee.getEmployeeID());
-        insertRecord.setString(2, employee.getHotelID());
-        insertRecord.setString(3, employee.getLastName());
-        insertRecord.setString(4, employee.getFirstName());
-        insertRecord.setString(5, employee.getUserName());
-        insertRecord.setString(6, employee.getPassword());
-        insertRecord.execute();
+        try {
+            PreparedStatement insertRecord = gc.getConn().prepareStatement
+                ("INSERT INTO employees VALUES(?, ?, ?, ?, ?, ?)");
+            insertRecord.setString(1, employee.getEmployeeID());
+            insertRecord.setString(2, employee.getHotelID());
+            insertRecord.setString(3, employee.getLastName());
+            insertRecord.setString(4, employee.getFirstName());
+            insertRecord.setString(5, employee.getUserName());
+            insertRecord.setString(6, employee.getPassword());
+            insertRecord.execute();
+            gc.getConn().close();
+        } catch(SQLException ex) {
+            
+        }
     }
    
-    //search function
-    public void searchEmp(String firstName, String lastName, String employeeID, String userName, String hotelID) {
-        String search = null;
-        //SELECT * FROM EMPLOYEES WHERE (emp_id = ?)
-        //check if name is empty, search empid, then check username
+    //search function -> used to add list to jlist
+    /**
+     * 
+     * @param firstName
+     * @param lastName
+     * @param employeeID
+     * @param userName
+     * @param hotelID
+     * @return arraylist of Employees
+     */
+    public ArrayList<Employee> searchEmp(String firstName, String lastName, String employeeID, String userName, String hotelID) {
+        //create the arraylist
+        ArrayList<Employee> empList = new ArrayList();
+        //connect to db
         gc.getDBConnection();
-        
+        //search string that uses all possible fields other than password
         String sql = "SELECT * FROM EMPLOYEES WHERE (emp_id = '"+ employeeID +"') OR "
                 + "(last_name = '" + lastName + "' AND first_name = '"+ firstName+"') OR "
                 + "(user_name ='"+userName+"') OR "
                 + "(hotel_id ='"+hotelID+"')";
+        //get info from DB
         try {
             stmt = gc.getConn().createStatement();
             rs = stmt.executeQuery(sql);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columns = rsmd.getColumnCount();
-//            System.out.println(rs.next()); //testing line delete
-            if(!rs.next()) {
-                showMessageDialog(null, "Nothing Found", "Search", JOptionPane.INFORMATION_MESSAGE);
-            }
             while(rs.next()) {
-                for (int i =1; i<= columns; i++){
-                    System.out.print(rs.getString(i)+" ");
-                }
-                System.out.println();
-            }
-            
-                
+                empList.add(new Employee(rs.getString(4),rs.getString(3),rs.getString(1),rs.getString(5),rs.getString(6)));
+            }//end while
         } catch(SQLException ex) {
             System.out.println("whoops"); //replace with a real exception
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("didn't crash"); //testing line delet
+//        //TESTING ITEM ITERATE THROUGH LIST
+//        for(int i=0; i<empList.size(); i++){
+//            System.out.println("while: " + empList.get(i));
+//        }//TESTING ITEM END
+        return empList;
     }
+    
+//    //Update Employee
+//    public void updateEmployee () {
+//        gc.getDBConnection();
+//        try {
+//            PreparedStatement insertRecord = gc.getConn().prepareStatement
+//                ("UPDATE employees SET e");
+//            insertRecord.setString(1, employee.getEmployeeID());
+//            insertRecord.setString(2, employee.getHotelID());
+//            insertRecord.setString(3, employee.getLastName());
+//            insertRecord.setString(4, employee.getFirstName());
+//            insertRecord.setString(5, employee.getUserName());
+//            insertRecord.setString(6, employee.getPassword());
+//            insertRecord.execute();
+//        } catch(SQLException ex) {
+//            
+//        }
+//    }
     
 }
