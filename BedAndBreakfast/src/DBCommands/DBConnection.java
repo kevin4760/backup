@@ -188,15 +188,19 @@ public class DBConnection{
 //    }
     
     //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
-    public ArrayList<String> searchGuests(String lastName){
+    public ArrayList<String> searchGuests(String lastName, String firstName){
         ArrayList<String> name =new ArrayList<>();       
         try {
-            String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";
+            String sql = "SELECT * FROM guests WHERE (last_name='" + lastName +"') OR "+
+                    "(first_name = '"+firstName+"')";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){  
                 name.add(lastName);              
             } 
+            while(rs.next()){
+                name.add(firstName);
+            }
             if(!rs.next()){
                 name.add("Not Found");
             }
@@ -205,7 +209,7 @@ public class DBConnection{
         }
         return name;
     }
-    
+
      //method returns one value from database
     public int getRoomStatus(String query) {
         int roomStatus = 3; //3 will be invalid input
