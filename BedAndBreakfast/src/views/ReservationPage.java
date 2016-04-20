@@ -14,24 +14,34 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+//custom imports
+import classes.Reservation;
+import DBCommands.ReservationDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author Aaron
+ * @author Kevin booking method
+ * @version 2
  */
 public class ReservationPage extends javax.swing.JFrame {
+    //create new reservationDAO
+    ReservationDAO rDAO = new ReservationDAO();
+    //create new reservation for general use
+    Reservation res = new Reservation();
+
     //Global Date Variables
     private Date date1,date2;
     private final String[] rooms;
     private DBConnection conn;
-    private final ArrayList<ArrayList<String>> results;
+    private ArrayList<ArrayList<String>> results;
+    private ArrayList<String> name;
+    private String[] names;
     
-      //Employee Data Access Object
-    private final GuestDAO gDAO = new GuestDAO();
-    //Employee Object
-    private final Guest guest = new Guest();
-    //Employee ArrayList to hold search information
-    private final ArrayList<Guest> guestList = new ArrayList<>();
+    
     
     public ReservationPage() {
         initComponents();
@@ -47,7 +57,7 @@ public class ReservationPage extends javax.swing.JFrame {
 //            roomsAvailCmbx.addItem(rooms[i]); 
         }  
         for (String j : rooms){
-            roomsAvailCmbx.addItem(j);
+            roomsAvail.addItem(j);
         }
     } 
 
@@ -71,8 +81,8 @@ public class ReservationPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lastName = new javax.swing.JTextField();
-        firstName = new javax.swing.JTextField();
-        title = new javax.swing.JComboBox();
+        FirstName = new javax.swing.JTextField();
+        Title = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         guestNumber = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -90,7 +100,7 @@ public class ReservationPage extends javax.swing.JFrame {
         NumberOfNights = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        roomsAvailCmbx = new javax.swing.JComboBox<String>();
+        roomsAvail = new javax.swing.JComboBox<String>();
         jLabel14 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         clearButton = new javax.swing.JButton();
@@ -194,7 +204,7 @@ public class ReservationPage extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -355,7 +365,7 @@ public class ReservationPage extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(roomsAvailCmbx, 0, 191, Short.MAX_VALUE)
+                .addComponent(roomsAvail, 0, 191, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -365,7 +375,7 @@ public class ReservationPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(roomsAvailCmbx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roomsAvail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -523,10 +533,30 @@ public class ReservationPage extends javax.swing.JFrame {
        
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    //Action Searchs for Guest by LastName only at this point.
+    //Action Searchs for Guest by lastName only at this point.
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-    
-        new GuestSearchModule().setVisible(rootPaneCheckingEnabled); 
+        /*
+         * Possible options if we do not like the current search and want to 
+         * centralized it to one interface.
+         * opens search screen
+         * new GuestSearchModule().setVisible(rootPaneCheckingEnabled);
+        */
+        
+//commented out will use guest search from guestDAO that aaron makes
+//        conn = new DBConnection();
+//        conn.getDBConnection();
+//        
+//        try{
+//            name=conn.searchGuests(lastName.getText());
+//            names=new String[name.size()];        
+//            for (int i = 0; i < name.size(); i++){
+//                names[i] = name.get(i);            
+//                searchResults.addItem(names[i]);         
+//            }  
+//        }
+//        catch(IllegalArgumentException ex){
+//            searchResults.addItem("Not Found");
+//        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -536,34 +566,66 @@ public class ReservationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        //Resets all the Fields
-        firstName.setText(null);
-        lastName.setText(null);
-        street.setText(null);
-        city.setText(null);
-        zipCode.setText(null);
-        NumberOfNights.setText(null);
-        guestNumber.setText(null);
-        title.setSelectedIndex(0);
-        roomsAvailCmbx.setSelectedIndex(0);
-        state.setSelectedIndex(0);
-        CheckInDate.setDate(new Date());
-        CheckOutDate.setDate(new Date());        
+        //Resets all the Fields created method for this field to use else where
+        clearForm();      
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
+        //get room from drop down
+        String room = (String)roomsAvail.getSelectedItem();
+        //call method to set checkin and out dates
+        getNewDate();
+        //set reservation obj: resNo, room no, guest no, in, out
+        try {
+            res.setResNo(conn.uniqueID("reservations", "1"));//reservation number
+            res.setRoomNumber(room);
+            res.setGuestNumber(GuestNumber.getText());
+            //        //Formats date for database
+            DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
+            String inDate=dataBaseFormat.format(date1);      
+            String outDate=dataBaseFormat.format(date2);
+            res.setCheckIn(inDate);
+            res.setCheckOut(outDate);
+            //call DAO and insert reservation
+            rDAO.insertReservation(res);
+        } catch (Exception ex) {
+        System.out.println("whoops");
+        Logger.getLogger(ReservationPage.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
         
-        //Gets date set by user
-        getNewDate();  
-        //Formats date for database
-        DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
-        String inDate=dataBaseFormat.format(date1);      
-        String outDate=dataBaseFormat.format(date2);
-        String roomSelected=(String) roomsAvailCmbx
-                .getItemAt(roomsAvailCmbx.getSelectedIndex());        
-      
-              
+        
+//commented out and used above method
+//        //Get Connection to Database Block       
+//        conn = new DBConnection();
+//        conn.getDBConnection();    
+//        try{
+//        //Coverts Selected Index into String       
+//        String title =String.valueOf(Title.getSelectedIndex());
+//       
+//        //Write Guest Information to the Database
+//        conn.setGuestInfo(GuestNumber.getText(), FirstName.getText(),
+//                lastName.getText(),title);
+//        
+//        //Converts Selected Index into String
+//        String state =String.valueOf(State.getSelectedIndex());
+//        conn.setGuestAddress(GuestNumber.getText(), Street.getText(), 
+//                City.getText(),state, ZipCode.getText()); 
+//        
+//        //Gets date set by user
+//        getNewDate();  
+//        //Formats date for database
+//        DateFormat dataBaseFormat=new SimpleDateFormat("dd-MMM-yy");
+//        String inDate=dataBaseFormat.format(date1);      
+//        String outDate=dataBaseFormat.format(date2);
+//        String roomSelected=(String) roomsAvailCmbx
+//                .getItemAt(roomsAvailCmbx.getSelectedIndex());        
+//        conn.setReservation(conn.uniqueID("reservations", "1"), roomSelected, conn.uniqueID("guests", "1"), inDate, outDate, 3.14);
+//        }catch(Exception ex){
+//            
+//        }
+//
+//              
     }//GEN-LAST:event_bookButtonActionPerformed
 
     private void zipCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zipCodeActionPerformed
@@ -572,49 +634,12 @@ public class ReservationPage extends javax.swing.JFrame {
 
     private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cityActionPerformed
-   
-    private void getNewDate(){       
-        //Formating Date to mmm-dd-yyyy
-       DateFormat format1=SimpleDateFormat.getDateInstance();     
-       
-       //Try Catch for Date Comparision
-        try{
-            //Setting Check In and Checkout Dates
-            date1 = format1.parse(format1.format(CheckInDate.getCalendar()
-                    .getTime()));
-            date2 = format1.parse(format1.format(CheckOutDate.getCalendar()
-                    .getTime()));
-            
-            /*
-            * Converting the Differance between Days to Long and comparing down 
-            * to the second.
-            */
-            long difference=Math.abs(date2.getTime()-date1.getTime());
-            long differenceDates=difference/(24*60*60*1000);
-            
-            //Converting Long differenceDates field back into string for output.
-            String dayDifference=Long.toString(differenceDates);
-            
-            //Selction to Catch Date Comparison Exceptions
-            if(date1.compareTo(date2)>0){
-                //Temp Error Message
-                System.out.println("Error Check Out Date Before Check In Date");
-            }                
-            else if(date1.equals(date2)){
-                //Temp Error Message
-                System.out.println("Error Check In and Check Out Date are Equal");
-            }
-            else if (date1.compareTo(date2)<0){  
-                //Output to the GUI
-                NumberOfNights.setText(dayDifference);           
-            }        
-        }        
-        catch(ParseException ex){
-            //Temp Error Message
-            ex.printStackTrace();
-        }  
-    }
+    }//GEN-LAST:event_CityActionPerformed
+
+    private void searchResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResultsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchResultsActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -654,6 +679,9 @@ public class ReservationPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private de.wannawork.jcalendar.JCalendarComboBox CheckInDate;
     private de.wannawork.jcalendar.JCalendarComboBox CheckOutDate;
+    private javax.swing.JTextField City;
+    private javax.swing.JTextField FirstName;
+    private javax.swing.JTextField GuestNumber;
     private javax.swing.JTextField NumberOfNights;
     private javax.swing.JButton bookButton;
     private javax.swing.JTextField city;
@@ -692,11 +720,69 @@ public class ReservationPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField lastName;
-    private javax.swing.JComboBox<String> roomsAvailCmbx;
+    private javax.swing.JComboBox<String> roomsAvail;
     private javax.swing.JButton searchButton;
     private javax.swing.JComboBox state;
     private javax.swing.JTextField street;
     private javax.swing.JComboBox title;
     private javax.swing.JTextField zipCode;
     // End of variables declaration//GEN-END:variables
-}
+
+    private void clearForm() {
+        FirstName.setText(null);
+        lastName.setText(null);
+        Street.setText(null);
+        City.setText(null);
+        ZipCode.setText(null);
+        NumberOfNights.setText(null);
+        GuestNumber.setText(null);
+        Title.setSelectedIndex(0);
+        roomsAvail.setSelectedIndex(0);
+        State.setSelectedIndex(0);
+        CheckInDate.setDate(new Date());
+        CheckOutDate.setDate(new Date());     
+    } //end clearFrom
+    
+    //create dates for checkin and checkout
+    private void getNewDate(){       
+    //Formating Date to mmm-dd-yyyy
+     DateFormat format1=SimpleDateFormat.getDateInstance();     
+
+    //Try Catch for Date Comparision
+        try{
+            //Setting Check In and Checkout Dates
+            date1 = format1.parse(format1.format(CheckInDate.getCalendar()
+                    .getTime()));
+            date2 = format1.parse(format1.format(CheckOutDate.getCalendar()
+                    .getTime()));
+
+            /*
+            * Converting the Differance between Days to Long and comparing down 
+            * to the second.
+            */
+            long difference=Math.abs(date2.getTime()-date1.getTime());
+            long differenceDates=difference/(24*60*60*1000);
+
+            //Converting Long differenceDates field back into string for output.
+            String dayDifference=Long.toString(differenceDates);
+
+            //Selction to Catch Date Comparison Exceptions
+            if(date1.compareTo(date2)>0){
+                //Temp Error Message
+                System.out.println("Error Check Out Date Before Check In Date");
+            }                
+            else if(date1.equals(date2)){
+                //Temp Error Message
+                System.out.println("Error Check In and Check Out Date are Equal");
+            }
+            else if (date1.compareTo(date2)<0){  
+                //Output to the GUI
+                NumberOfNights.setText(dayDifference);           
+            }        
+        }        
+        catch(ParseException ex){
+            //Temp Error Message
+            ex.printStackTrace();
+        }  
+    }//end getNewDate()
+}//end Class ReservationPage

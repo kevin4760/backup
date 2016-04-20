@@ -355,14 +355,12 @@ public class EmployeeModule extends javax.swing.JFrame {
         emp.setEmployeeID(id.getText());
         emp.setHotelID(hotelid.getText());
         emp.setUserName(username.getText());
-        if(!password.getText().isEmpty()||!password.getText().equalsIgnoreCase(" ")){
-            emp.setPassword(password.getText());
-        }
+        emp.setPassword(password.getText());
         eDAO.updateEmployee(emp);
     }//GEN-LAST:event_updateActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        
+        this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
     private void searchResultsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_searchResultsItemStateChanged
