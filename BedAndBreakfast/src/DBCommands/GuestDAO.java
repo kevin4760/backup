@@ -69,7 +69,7 @@ public class GuestDAO {
             String guestNumber,String street, String zipCode){
         
         //Creates the Guest List
-        ArrayList<Guest> guestList=new ArrayList();
+        ArrayList<Guest> guestList=new ArrayList<>();
         //Creates the Database Connection
         gc.getDBConnection();
         
