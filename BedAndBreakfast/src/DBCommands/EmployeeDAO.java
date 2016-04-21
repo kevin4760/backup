@@ -78,7 +78,7 @@ public class EmployeeDAO {
      */
     public ArrayList<Employee> searchEmp(String firstName, String lastName, String employeeID, String userName, String hotelID) {
         //create the arraylist
-        ArrayList<Employee> empList = new ArrayList();
+        ArrayList<Employee> empList = new ArrayList<>();
         //connect to db
         gc.getDBConnection();
         //search string that uses all possible fields other than password

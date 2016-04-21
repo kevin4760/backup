@@ -69,7 +69,7 @@ public class EmployeeModule extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        searchResults = new javax.swing.JComboBox();
+        searchResults = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -435,7 +435,7 @@ public class EmployeeModule extends javax.swing.JFrame {
     private javax.swing.JTextField last;
     private javax.swing.JTextField password;
     private javax.swing.JButton search;
-    private javax.swing.JComboBox searchResults;
+    private javax.swing.JComboBox<String> searchResults;
     private javax.swing.JButton update;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
