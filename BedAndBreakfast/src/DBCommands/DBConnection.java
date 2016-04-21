@@ -169,33 +169,38 @@ public class DBConnection{
             System.out.println(ex);
         }
     }
-        
-    //Set Reseration Method
-    public void setReservation(String reservationNum, String roomNum, String guestNumber
-    ,String inDate, String outDate, Double price){
-        try{
-            String sql="INSERT INTO reservations(RES_NO, RM_NO, GUEST_NO, "
-                    + "IN_DATE, OUT_DATE, PRICE)Values('"+reservationNum+"','"
-                    +roomNum+"','"+guestNumber+"','"+inDate+"','"+outDate+"','"
-                    +price+"')";
-            stmt=conn.createStatement();
-            stmt.executeUpdate(sql);
-        }
-         catch(SQLException ex) {
-            System.out.println(ex);
-        }
-    }
+
+//    //commented out, create reservation in ReservationDAO class    
+//    //Set Reseration Method
+//    public void setReservation(String reservationNum, String roomNum, String guestNumber
+//    ,String inDate, String outDate, Double price){
+//        try{
+//            String sql="INSERT INTO reservations(RES_NO, RM_NO, GUEST_NO, "
+//                    + "IN_DATE, OUT_DATE, PRICE)Values('"+reservationNum+"','"
+//                    +roomNum+"','"+guestNumber+"','"+inDate+"','"+outDate+"','"
+//                    +price+"')";
+//            stmt=conn.createStatement();
+//            stmt.executeUpdate(sql);
+//        }
+//         catch(SQLException ex) {
+//            System.out.println(ex);
+//        }
+//    }
     
     //UNDER CONSTRUCTION: Searchs for Guest, last name only at this point
-    public ArrayList<String> searchGuests(String lastName){
+    public ArrayList<String> searchGuests(String lastName, String firstName){
         ArrayList<String> name =new ArrayList<>();       
         try {
-            String sql = "SELECT * FROM guests WHERE last_name='" + lastName +"'";
+            String sql = "SELECT * FROM guests WHERE (last_name='" + lastName +"') OR "+
+                    "(first_name = '"+firstName+"')";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){  
                 name.add(lastName);              
             } 
+            while(rs.next()){
+                name.add(firstName);
+            }
             if(!rs.next()){
                 name.add("Not Found");
             }
@@ -204,7 +209,7 @@ public class DBConnection{
         }
         return name;
     }
-    
+
      //method returns one value from database
     public int getRoomStatus(String query) {
         int roomStatus = 3; //3 will be invalid input
@@ -283,7 +288,7 @@ public class DBConnection{
     /**
      * 
      * @param table the DB Table that you will insert 
-     * @param column Must be the ID column
+     * @param column Must be the ID column usually "1"
      * @return
      * @throws SQLException 
      */

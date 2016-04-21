@@ -368,12 +368,7 @@
                           <Component id="State" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="searchResults" pref="141" max="32767" attributes="0"/>
-                      <Component id="jLabel15" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace min="31" pref="353" max="32767" attributes="0"/>
               </Group>
               <Component id="jLabel12" max="32767" attributes="0"/>
           </Group>
@@ -386,13 +381,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Street" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="City" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="searchResults" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -413,9 +406,6 @@
         <Component class="javax.swing.JTextField" name="Street">
         </Component>
         <Component class="javax.swing.JTextField" name="City">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CityActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="ZipCode">
           <Events>
@@ -514,22 +504,6 @@
             <Property name="text" type="java.lang.String" value="Address Information"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="searchResults">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Search Results"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel4">
@@ -596,7 +570,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="roomsAvailCmbx" pref="191" max="32767" attributes="0"/>
+                  <Component id="roomsAvail" pref="191" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Component id="jLabel14" alignment="0" max="32767" attributes="0"/>
@@ -608,14 +582,14 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="roomsAvailCmbx" max="-2" attributes="0"/>
+                  <Component id="roomsAvail" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JComboBox" name="roomsAvailCmbx">
+        <Component class="javax.swing.JComboBox" name="roomsAvail">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>

@@ -23,6 +23,11 @@ public class Employee {
     public Employee() {
         //empty
     }
+    
+    public Employee(Employee employee) {
+        
+    }
+    
     public Employee(String firstName, String lastName, String employeeID, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -108,6 +113,12 @@ public class Employee {
      */
     public String getHotelID() {
         return hotelID;
+    }
+    /**
+     * @param hotelID 
+     */
+    public void setHotelID(String hotelID) {
+        this.hotelID = hotelID;
     }
     
 }

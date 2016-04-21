@@ -78,7 +78,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        roomList = new javax.swing.JList();
+        roomList = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -541,7 +541,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField percentUsed;
     private javax.swing.JButton reservation;
     private javax.swing.JButton reservationSearch;
-    private javax.swing.JList roomList;
+    private javax.swing.JList<String> roomList;
     private javax.swing.JButton roomSearch;
     private javax.swing.JTextField unoccupiedRooms;
     // End of variables declaration//GEN-END:variables
