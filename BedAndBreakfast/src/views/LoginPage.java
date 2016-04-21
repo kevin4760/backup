@@ -141,11 +141,12 @@ public class LoginPage extends javax.swing.JFrame {
         DBConnection gc = new DBConnection();
         gc.getDBConnection();
         //System.out.println(gc.validateUser(username.getText(), password.getText()));
-        if(gc.validateUser(username.getText(), password.getText())){
+        if(gc.validateUser(username.getText(), password.getPassword())){
             new Dashboard().setVisible(rootPaneCheckingEnabled);
             this.setVisible(false);
-        } else
+        } else{
             showMessageDialog(null, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_enterActionPerformed
 
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed

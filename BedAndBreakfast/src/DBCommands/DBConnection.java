@@ -119,8 +119,8 @@ public class DBConnection{
     }
     
     //method validateUser()
-    public Boolean validateUser(String username, String password) {
-        
+    public Boolean validateUser(String username, char[] input) {
+        String password = new String(input);
         Boolean access = false;
         try {
             String sql = "SELECT * FROM employees WHERE user_name='" + username + 
