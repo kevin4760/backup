@@ -119,12 +119,12 @@ public class DBConnection{
     }
     
     //method validateUser()
-    public Boolean validateUser(String username, String password) {
-        
+    public Boolean validateUser(String user, char[] input) {
+        String pass = new String(input);
         Boolean access = false;
         try {
-            String sql = "SELECT * FROM employees WHERE user_name='" + username + 
-                "' and password='" + password +"'";
+            String sql = "SELECT * FROM employees WHERE user_name='" + user + 
+                "' and password='" + pass +"'";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             if(rs.next()){
