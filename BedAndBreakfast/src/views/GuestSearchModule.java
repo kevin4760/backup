@@ -20,7 +20,7 @@ public class GuestSearchModule extends javax.swing.JFrame {
     private final GuestDAO gDAO = new GuestDAO();
     
     private Guest guest = new Guest();
-    
+    //Array to hold search guest
     private ArrayList<Guest> guestList = new ArrayList<>();
     public GuestSearchModule() {
         initComponents();
@@ -321,6 +321,11 @@ public class GuestSearchModule extends javax.swing.JFrame {
         editButton.setText("Edit");
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -458,10 +463,10 @@ public class GuestSearchModule extends javax.swing.JFrame {
         
         //Takes Information from Field and Inputs into Database
         try{
-            Guest bobby = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
+            Guest guest = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
                    stringTitle, street.getText(), city.getText(),
                    stringState, zipCode.getText());
-            gDAO.insertGuest(bobby);
+            gDAO.insertGuest(guest);
         }
         catch(Exception ex){
             System.out.println("Not Going IN"+ex);//Temp message
@@ -482,6 +487,23 @@ public class GuestSearchModule extends javax.swing.JFrame {
         checkInDate.setText(null);
         checkOutDate.setText(null);
     }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        //Converts Selcted Index to String
+        String stringTitle=String.valueOf(title.getSelectedItem());
+        String stringState=String.valueOf(state.getSelectedItem());
+        
+        //Takes Information from Field and Inputs into Database
+        try{
+            Guest guest = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
+                   stringTitle, street.getText(), city.getText(),
+                   stringState, zipCode.getText());
+            gDAO.updateGuest(guest);
+        }
+        catch(Exception ex){
+            System.out.println("Not Going IN"+ex);//Temp message
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
    
     /**
