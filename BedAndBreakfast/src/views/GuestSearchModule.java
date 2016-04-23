@@ -17,13 +17,15 @@ import java.util.ArrayList;
  */
 public class GuestSearchModule extends javax.swing.JFrame {
   
-    private final GuestDAO gDAO = new GuestDAO();
-    
-    private Guest guest = new Guest();
-    
-    private ArrayList<Guest> guestList = new ArrayList<>();
+    private final GuestDAO gDAO;
+    private Guest guest;
+    private ArrayList<Guest> guestList;
+
     public GuestSearchModule() {
         initComponents();
+        gDAO = new GuestDAO();
+        guest = new Guest();
+        guestList = new ArrayList<>();
     }
 
     /**
@@ -56,7 +58,7 @@ public class GuestSearchModule extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        searchResults = new javax.swing.JComboBox();
+        searchResults = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         createGuest = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -556,7 +558,7 @@ public class GuestSearchModule extends javax.swing.JFrame {
     private javax.swing.JButton reservationButton;
     private javax.swing.JTextField roomNumber;
     private javax.swing.JButton searchButton;
-    private javax.swing.JComboBox searchResults;
+    private javax.swing.JComboBox<String> searchResults;
     private javax.swing.JComboBox state;
     private javax.swing.JTextField street;
     private javax.swing.JComboBox title;

@@ -310,12 +310,11 @@
             <Component class="javax.swing.JComboBox" name="Title">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="4">
                     <StringItem index="0" value="Dr."/>
                     <StringItem index="1" value="Mr."/>
                     <StringItem index="2" value="Mrs."/>
                     <StringItem index="3" value="Miss."/>
-                    <StringItem index="4" value="Jr."/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -466,7 +465,7 @@
                 <StringItem index="47" value="WV"/>
                 <StringItem index="48" value="WI"/>
                 <StringItem index="49" value="WY"/>
-                <StringItem index="50" value=" "/>
+                <StringItem index="50" value=""/>
               </StringArray>
             </Property>
           </Properties>

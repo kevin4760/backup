@@ -26,12 +26,20 @@ import static javax.swing.JOptionPane.showMessageDialog;
  *is used to facilitate between reservation form and database
  * @author Kevin
  */
+/*
+status can be the following
+0 - reserved
+1 - check in
+2 - check out
+3 - cancel
+4 - no show
+*/
 public class ReservationDAO {
     //variables
     private Statement stmt;
     private ResultSet rs;
     private PreparedStatement ps;
-    
+
     //connection
     DBConnection gc = new DBConnection();
     
@@ -63,5 +71,94 @@ public class ReservationDAO {
         }
     }//end insertReservation()
     
-    //creates SQL date format to be used in insertReservation()
+    //check in reservaton
+    public void checkInReservation(Reservation r) {
+        //connects to database
+        gc.getDBConnection();
+        //need method to get guest and room number
+        try{
+            //creates unique reservation number sets to current reservation
+
+            //insert record
+            ps=gc.getConn().prepareStatement
+                ("UPDATE reservations SET status=? where res_no=?");
+            ps.setInt(1, 1);
+            ps.setString(2, r.getResNo());
+            ps.executeQuery();
+            //user message
+            showMessageDialog(null, "Reservation Checked In", "Checked In", JOptionPane.INFORMATION_MESSAGE);
+            //close connection
+            gc.getConn().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//end checkinReservation()
+    
+    //check in reservaton
+    public void checkOutReservation(Reservation r) {
+        //connects to database
+        gc.getDBConnection();
+        //need method to get guest and room number
+        try{
+            //creates unique reservation number sets to current reservation
+
+            //insert record
+            ps=gc.getConn().prepareStatement
+                ("UPDATE reservations SET status=? where res_no=?");
+            ps.setInt(1, 2);
+            ps.setString(2, r.getResNo());
+            ps.executeQuery();
+            //user message
+            showMessageDialog(null, "Reservation Checked In", "Checked In", JOptionPane.INFORMATION_MESSAGE);
+            //close connection
+            gc.getConn().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//end checkOutReservation()
+    
+    //check in reservaton
+    public void cancelReservation(Reservation r) {
+        //connects to database
+        gc.getDBConnection();
+        //need method to get guest and room number
+        try{
+            //creates unique reservation number sets to current reservation
+
+            //insert record
+            ps=gc.getConn().prepareStatement
+                ("UPDATE reservations SET status=? where res_no=?");
+            ps.setInt(1, 3);
+            ps.setString(2, r.getResNo());
+            ps.executeQuery();
+            //user message
+            showMessageDialog(null, "Reservation Checked In", "Checked In", JOptionPane.INFORMATION_MESSAGE);
+            //close connection
+            gc.getConn().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//end cancelReservation()
+    //check in reservaton
+    public void noShowReservation(Reservation r) {
+        //connects to database
+        gc.getDBConnection();
+        //need method to get guest and room number
+        try{
+            //creates unique reservation number sets to current reservation
+
+            //insert record
+            ps=gc.getConn().prepareStatement
+                ("UPDATE reservations SET status=? where res_no=?");
+            ps.setInt(1, 4);
+            ps.setString(2, r.getResNo());
+            ps.executeQuery();
+            //user message
+            showMessageDialog(null, "Reservation Checked In", "Checked In", JOptionPane.INFORMATION_MESSAGE);
+            //close connection
+            gc.getConn().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//end insertReservation()
 }
