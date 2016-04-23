@@ -17,7 +17,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author Aaron
  */
 public class LoginPage extends javax.swing.JFrame {
-
+    DBConnection gc = new DBConnection();
     /**
      * Creates new form Login
      */
@@ -138,7 +138,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
         // validates username and password moves to reservation screen
-        DBConnection gc = new DBConnection();
+
         gc.getDBConnection();
         //System.out.println(gc.validateUser(username.getText(), password.getText()));
         if(gc.validateUser(username.getText(), password.getPassword())){
