@@ -333,7 +333,7 @@ public class ReservationManagement extends javax.swing.JFrame {
 
         jButtonCheckOut.setText("Check Out");
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText("Cancel Reservation");
 
         javax.swing.GroupLayout jPanelReservationActionsLayout = new javax.swing.GroupLayout(jPanelReservationActions);
         jPanelReservationActions.setLayout(jPanelReservationActionsLayout);
