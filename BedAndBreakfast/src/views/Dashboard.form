@@ -169,7 +169,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="reservation">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reservation"/>
+            <Property name="text" type="java.lang.String" value=" New Reservation"/>
             <Property name="toolTipText" type="java.lang.String" value="Takes you to the reservation page."/>
           </Properties>
           <Events>
@@ -194,7 +194,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="roomSearch">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Room Search"/>
+            <Property name="text" type="java.lang.String" value="Room Management"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roomSearchActionPerformed"/>

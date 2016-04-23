@@ -105,7 +105,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Main Menu");
 
-        reservation.setText("Reservation");
+        reservation.setText(" New Reservation");
         reservation.setToolTipText("Takes you to the reservation page.");
         reservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +127,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        roomSearch.setText("Room Search");
+        roomSearch.setText("Room Management");
         roomSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roomSearchActionPerformed(evt);
@@ -431,7 +431,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void reservationSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationSearchActionPerformed
         // moves view to reservationSearchModule, hides dashboard
-        new ReservationSearchModule().setVisible(rootPaneCheckingEnabled);
+        new ReservationManagement().setVisible(rootPaneCheckingEnabled);
         //this.setVisible(true);
     }//GEN-LAST:event_reservationSearchActionPerformed
 
@@ -460,7 +460,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void roomListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_roomListValueChanged
-        String selectedRoom = roomList.getSelectedValue().toString();
+        String selectedRoom = roomList.getSelectedValue();
         roomStatus = conn.getRoomStatus("select clean from rooms where rm_no = '"+selectedRoom+"'");
         if(roomStatus == 0 ) {
             jRadioButtonClean.setSelected(true);

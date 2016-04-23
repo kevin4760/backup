@@ -65,3 +65,17 @@ CREATE TABLE addresses (
   CONSTRAINT addresses_fk
     FOREIGN KEY (guest_no) REFERENCES guests(guest_no)
 )
+
+DROP TABLE business_dates CASCADE CONTRAINTS;
+CREATE TABLE business_date(
+  emp_id  VARCHAR2(10),
+  hotel_id VARCHAR2(10),
+  business_date DATE,
+  occupied_rooms NUMBER(10),
+  total_rooms NUMBER(10),
+  PRIMARY KEY (business_date),
+  CONSTRAINT bd_employees_fk
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id),
+  CONSTRAINT bd_hotel_fk
+    FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)
+  );
