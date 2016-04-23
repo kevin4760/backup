@@ -98,6 +98,14 @@ public class ReservationPage extends javax.swing.JFrame {
         zipCode = new javax.swing.JTextField();
         searchButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        NumberOfNights = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        roomsAvail = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         clearButton = new javax.swing.JButton();
@@ -278,7 +286,6 @@ public class ReservationPage extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(state, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

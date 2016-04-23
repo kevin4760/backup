@@ -37,6 +37,15 @@ public class Reservation {
         this.price = 50.55;
         this.status = 1; 
     }
+    public Reservation(String roomNumber, String guestNumber, String checkIn, String checkOut, double price, int status) {
+        this.resNo = null;
+        this.roomNumber  = roomNumber;
+        this.guestNumber = guestNumber;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.price = price;
+        this.status = status; 
+    }    
     //end constructors
 
     /**
