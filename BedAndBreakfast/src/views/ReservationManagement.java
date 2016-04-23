@@ -69,6 +69,8 @@ public class ReservationManagement extends javax.swing.JFrame {
         jCalendarComboBoxCheckOutDate = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabelReservationNumber = new javax.swing.JLabel();
         jTextFieldReservationNumber = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanelReservationActions = new javax.swing.JPanel();
         jButtonSearch = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
@@ -238,7 +240,7 @@ public class ReservationManagement extends javax.swing.JFrame {
         jLabeLCheckOutDate.setText("Check-Out-Date");
 
         jLabelNoOfNights.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelNoOfNights.setText("Number of Nights");
+        jLabelNoOfNights.setText("Nights");
 
         jLabelRmNo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelRmNo.setText("Room Number");
@@ -247,6 +249,10 @@ public class ReservationManagement extends javax.swing.JFrame {
         jLabelResvNo.setText("Reservation Information");
 
         jLabelReservationNumber.setText("Reservation Number");
+
+        jLabel11.setText("Status");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reserved", "Checked In", "Checked Out", "Cancel", "No Show" }));
 
         javax.swing.GroupLayout jPanelReservationInformationLayout = new javax.swing.GroupLayout(jPanelReservationInformation);
         jPanelReservationInformation.setLayout(jPanelReservationInformationLayout);
@@ -259,23 +265,27 @@ public class ReservationManagement extends javax.swing.JFrame {
                     .addComponent(jLabelCheckInDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCalendarComboBoxCheckOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabeLCheckOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabeLCheckOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCalendarComboBoxCheckOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelNoOfNights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNoOfNights))
-                .addGap(10, 10, 10)
                 .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelReservationInformationLayout.createSequentialGroup()
                         .addComponent(jComboBoxRoomNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldReservationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldReservationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelReservationInformationLayout.createSequentialGroup()
                         .addComponent(jLabelRmNo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelReservationNumber)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addComponent(jLabelReservationNumber)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabelResvNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelReservationInformationLayout.setVerticalGroup(
@@ -289,13 +299,15 @@ public class ReservationManagement extends javax.swing.JFrame {
                     .addComponent(jLabeLCheckOutDate)
                     .addComponent(jLabelNoOfNights)
                     .addComponent(jLabelRmNo)
-                    .addComponent(jLabelReservationNumber))
+                    .addComponent(jLabelReservationNumber)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelReservationInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBoxRoomNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldReservationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldReservationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jCalendarComboBoxCheckInDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCalendarComboBoxCheckOutDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
@@ -467,11 +479,13 @@ public class ReservationManagement extends javax.swing.JFrame {
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBoxCheckInDate;
     private de.wannawork.jcalendar.JCalendarComboBox jCalendarComboBoxCheckOutDate;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxRoomNumber;
     private javax.swing.JComboBox<String> jComboBoxState;
     private javax.swing.JLabel jLabeLCheckOutDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
