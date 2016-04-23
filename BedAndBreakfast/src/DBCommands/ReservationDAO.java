@@ -75,11 +75,7 @@ public class ReservationDAO {
     public void checkInReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
-        //need method to get guest and room number
         try{
-            //creates unique reservation number sets to current reservation
-
-            //insert record
             ps=gc.getConn().prepareStatement
                 ("UPDATE reservations SET status=? where res_no=?");
             ps.setInt(1, 1);
@@ -98,11 +94,7 @@ public class ReservationDAO {
     public void checkOutReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
-        //need method to get guest and room number
         try{
-            //creates unique reservation number sets to current reservation
-
-            //insert record
             ps=gc.getConn().prepareStatement
                 ("UPDATE reservations SET status=? where res_no=?");
             ps.setInt(1, 2);
@@ -121,11 +113,7 @@ public class ReservationDAO {
     public void cancelReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
-        //need method to get guest and room number
         try{
-            //creates unique reservation number sets to current reservation
-
-            //insert record
             ps=gc.getConn().prepareStatement
                 ("UPDATE reservations SET status=? where res_no=?");
             ps.setInt(1, 3);
@@ -143,11 +131,7 @@ public class ReservationDAO {
     public void noShowReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
-        //need method to get guest and room number
         try{
-            //creates unique reservation number sets to current reservation
-
-            //insert record
             ps=gc.getConn().prepareStatement
                 ("UPDATE reservations SET status=? where res_no=?");
             ps.setInt(1, 4);
@@ -162,25 +146,27 @@ public class ReservationDAO {
         }
     }//end noShowReservation()
     //Search reservaton
-    public Reservation searchReservation(int res_no) {
+    public ArrayList<Reservation> searchReservationByResNo(int res_no) {
         //connects to database
         gc.getDBConnection();
-        Reservation r;
+        ArrayList <Reservation>records = new ArrayList<>();
         //need method to get guest and room number
         try{
-            //creates unique reservation number sets to current reservation
-
-            //insert record
             ps=gc.getConn().prepareStatement
-                ("select * from reservations where res_no=?");
+                ("select res_no, rm_no, guest_no, in_date, out_date, price"
+                        + ",status from reservations where res_no=?");
             ps.setInt(1, res_no);
-            ps.executeQuery();
-            //r.setResNo(resNo);
-//close connection
+            rs = ps.executeQuery();
+            while (rs.next()){
+                records.add(new Reservation(rs.getString(1), rs.getString(2),
+                rs.getString(3),rs.getString(4),rs.getDouble(5),rs.getInt(6)));
+            }
+            rs.close();
+            //close connection
             gc.getConn().close();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return r;
+        return records;
     }//end searchReservation()
 }

@@ -19,11 +19,11 @@ import java.util.*;
 public class EmployeeModule extends javax.swing.JFrame {
     
     //Employee Data Access Object
-    private final EmployeeDAO eDAO = new EmployeeDAO();
+    private final EmployeeDAO eDAO;
     //Employee Object
-    private Employee emp = new Employee();
+    private Employee emp;
     //Employee ArrayList to hold search information
-    private ArrayList<Employee> empList = new ArrayList<>();
+    private ArrayList<Employee> empList;
     
     
     /**
@@ -31,7 +31,9 @@ public class EmployeeModule extends javax.swing.JFrame {
      */
     public EmployeeModule() {
         initComponents();
-        
+        eDAO = new EmployeeDAO();
+        emp = new Employee();
+        empList = new ArrayList<>();
     }
 
     /**
