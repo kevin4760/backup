@@ -13,19 +13,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
  * @author Aaron
- * updated Kevin  - added guest insert method
  */
 public class GuestDAO {
     
     private Statement stmt;
     private ResultSet rs;
-    private PreparedStatement ps;
     
     //connection
     DBConnection gc = new DBConnection();
@@ -33,13 +30,10 @@ public class GuestDAO {
     /**
      * Inserts new employee into database
      * @param guest     
-     * @throws java.sql.SQLException     
      */
-    public void insertGuest(Guest guest) throws SQLException{
+    public void insertGuest(Guest guest){
         //Gets Database Connection
         gc.getDBConnection();
-        //create guest number
-        guest.setGuestNumber(gc.uniqueID("guests", "1"));
         //Inserts Into Database to Create Guest Try Catch Block
         try{
             //Inserts Information into guests data table
@@ -91,8 +85,8 @@ public class GuestDAO {
             rs=stmt.executeQuery(sql);
             while(rs.next()){
                 guestList.add(new Guest(rs.getString(1),rs.getString(2),
-                        rs.getString(3),rs.getString(4),rs.getString(6),
-                        rs.getString(7),rs.getString(8),rs.getString(9)));
+                        rs.getString(3),rs.getString(4),rs.getString(5),
+                        rs.getString(6),rs.getString(7),rs.getString(8)));
             }
         }
         catch(SQLException ex){
@@ -100,32 +94,6 @@ public class GuestDAO {
             Logger.getLogger(GuestDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Returns the List
-        return guestList; 
-    }//end searchGuest()
-    
-    //Update Guest
-    public void updateGuest (Guest guest) {
-        gc.getDBConnection();
-        try {
-            //update TABLE guests
-            ps = gc.getConn().prepareStatement("UPDATE guests SET last_name=?, first_name=?, title=? WHERE guest_no=?" );
-            ps.setString(1, guest.getLastName());
-            ps.setString(2, guest.getFirstName());
-            ps.setString(3, guest.getTitle());
-            ps.setString(4, guest.getGuestNumber());
-            ps.executeQuery();
-            //
-            ps = gc.getConn().prepareStatement("UPDATE addresses SET street=?, city=?, state=?, zip=? WHERE guest_no=?" );
-            ps.setString(1, guest.getStreet());
-            ps.setString(2, guest.getCity());
-            ps.setString(3, guest.getState());
-            ps.setString(4, guest.getZipCode());
-            ps.setString(5, guest.getGuestNumber());
-            ps.executeQuery();
-            gc.getConn().close();
-            showMessageDialog(null, "Guest Updated: "+guest.getLastName()+", "+guest.getFirstName(),"Record Update", JOptionPane.INFORMATION_MESSAGE);
-        } catch(SQLException ex) {
-            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//end updateEmployee()
+        return guestList;       
+    }   
 }

@@ -17,11 +17,6 @@ import java.util.ArrayList;
  */
 public class GuestSearchModule extends javax.swing.JFrame {
   
-    private final GuestDAO gDAO = new GuestDAO();
-    
-    private Guest guest = new Guest();
-    //Array to hold search guest
-    private ArrayList<Guest> guestList = new ArrayList<>();
     private final GuestDAO gDAO;
     private Guest guest;
     private ArrayList<Guest> guestList;
@@ -328,11 +323,6 @@ public class GuestSearchModule extends javax.swing.JFrame {
         editButton.setText("Edit");
 
         updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateButtonActionPerformed(evt);
-            }
-        });
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +366,7 @@ public class GuestSearchModule extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Guest Information");
+        jLabel16.setText("Guest Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -470,10 +460,10 @@ public class GuestSearchModule extends javax.swing.JFrame {
         
         //Takes Information from Field and Inputs into Database
         try{
-            Guest guest = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
+            Guest bobby = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
                    stringTitle, street.getText(), city.getText(),
                    stringState, zipCode.getText());
-            gDAO.insertGuest(guest);
+            gDAO.insertGuest(bobby);
         }
         catch(Exception ex){
             System.out.println("Not Going IN"+ex);//Temp message
@@ -494,23 +484,6 @@ public class GuestSearchModule extends javax.swing.JFrame {
         checkInDate.setText(null);
         checkOutDate.setText(null);
     }//GEN-LAST:event_clearButtonActionPerformed
-
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        //Converts Selcted Index to String
-        String stringTitle=String.valueOf(title.getSelectedItem());
-        String stringState=String.valueOf(state.getSelectedItem());
-        
-        //Takes Information from Field and Inputs into Database
-        try{
-            Guest guest = new Guest(guestNumber.getText(),lastName.getText(),firstName.getText(), 
-                   stringTitle, street.getText(), city.getText(),
-                   stringState, zipCode.getText());
-            gDAO.updateGuest(guest);
-        }
-        catch(Exception ex){
-            System.out.println("Not Going IN"+ex);//Temp message
-        }
-    }//GEN-LAST:event_updateButtonActionPerformed
 
    
     /**

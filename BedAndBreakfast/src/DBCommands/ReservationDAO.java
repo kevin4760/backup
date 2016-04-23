@@ -9,13 +9,18 @@ import classes.Reservation;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
-import views.GuestSearchModule;
 
 /**
  *is used to facilitate between reservation form and database
@@ -63,15 +68,6 @@ public class ReservationDAO {
             gc.getConn().close();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
-            //catches violation of unique guest_id
-            if (ex.getSQLState().startsWith("23")){
-                //creates user options and throw to GuestSearchModule for guest creation
-                int reply = JOptionPane.showConfirmDialog(null, "Guest does not exist.  "
-                    + "Would you like to create Guest?", "Invalid Guest Number", JOptionPane.YES_NO_OPTION);
-                if (reply == 0) {
-                    new GuestSearchModule().setVisible(true);
-                }
-            }
         }
     }//end insertReservation()
     
