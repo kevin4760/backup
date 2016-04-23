@@ -79,3 +79,41 @@ CREATE TABLE business_date(
   CONSTRAINT bd_hotel_fk
     FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)
   );
+
+CREATE OR REPLACE PACKAGE night_audit AS
+    business_date AS business_dates.business_date%TYPE;
+    --current_date AS business_date.business_date%TYPE;
+    occupied_rooms AS NUMBER;
+    total_rooms AS NUMBER;
+    --reservations AS reservations%ROWTYPE;
+    TYPE no_show_res_type IS RECORD(
+      res_no AS reservations.res_no%TYPE;
+      use_count AS rooms.use_count%TYPE
+      rm_no AS rooms.rm_no%TYPE;
+    );
+
+    FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
+      RETURN BOOLEAN AS
+      no_show_res no_show_res_type;
+      SELECT MAX(business_date)+1 INTO business_date FROM business_date;
+      CURSOR res_cursor IS SELECT a.res_no, b.use_count,b.rm_no FROM reservations a, rooms b
+        WHERE a.rm_no = b.rm_no AND a.in_date <= current_date AND a.status=0;
+
+      BEGIN
+        INSERT INTO busines_dates SET occupSELECT COUNT(*) INTO occupied_rooms FROM reservations WHERE status = 1;
+        SELECT COUNT(*) INTO total_rooms FROM rooms;
+
+        LOOP
+            FETCH res_cursor INTO no_show_res
+            EXIT WHEN res_cursor%NOTFOUND;
+            --change arrival reservations to no show
+            UPDATE reservations res SET status = 4 WHERE res.res_no = no_show_resv.res_no;
+            --add use_count to 
+UPDATE rooms r SET use_count = no_show_resv.use_count + 1 WHERE r.rm_no = no_show_resv.rm_no;
+        END LOOP;
+      EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+        RETURN FALSE;
+      RETURN TRUE;
+    END roll_date;
+END night_audit;
