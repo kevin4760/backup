@@ -94,7 +94,7 @@ public class ReservationDAO {
         }
     }//end checkinReservation()
     
-    //check in reservaton
+    //check out reservaton
     public void checkOutReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
@@ -117,7 +117,7 @@ public class ReservationDAO {
         }
     }//end checkOutReservation()
     
-    //check in reservaton
+    //cancel reservaton
     public void cancelReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
@@ -139,7 +139,7 @@ public class ReservationDAO {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//end cancelReservation()
-    //check in reservaton
+    //no show reservaton
     public void noShowReservation(Reservation r) {
         //connects to database
         gc.getDBConnection();
@@ -160,5 +160,27 @@ public class ReservationDAO {
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//end insertReservation()
+    }//end noShowReservation()
+    //Search reservaton
+    public Reservation searchReservation(int res_no) {
+        //connects to database
+        gc.getDBConnection();
+        Reservation r;
+        //need method to get guest and room number
+        try{
+            //creates unique reservation number sets to current reservation
+
+            //insert record
+            ps=gc.getConn().prepareStatement
+                ("select * from reservations where res_no=?");
+            ps.setInt(1, res_no);
+            ps.executeQuery();
+            //r.setResNo(resNo);
+//close connection
+            gc.getConn().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
+    }//end searchReservation()
 }
