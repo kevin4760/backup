@@ -6,6 +6,7 @@
 package views;
 
 import DBCommands.DBConnection;
+import DBCommands.RoomDAO;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  */
 public class Dashboard extends javax.swing.JFrame {
 
+    RoomDAO roomDAO = new RoomDAO();
     private String[] rooms;
     private DBConnection conn;
     private ArrayList<String> results;
@@ -67,6 +69,7 @@ public class Dashboard extends javax.swing.JFrame {
         roomSearch = new javax.swing.JButton();
         employee = new javax.swing.JButton();
         exitProgram = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -80,7 +83,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        roomList = new javax.swing.JList<>();
+        roomList = new javax.swing.JList<String>();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jRadioButtonOccupied = new javax.swing.JRadioButton();
@@ -148,6 +151,13 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -163,6 +173,10 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(reservationSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(employee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +192,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(roomSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(employee)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(exitProgram)
                 .addContainerGap())
@@ -476,6 +492,10 @@ public class Dashboard extends javax.swing.JFrame {
         new EmployeeModule().setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_employeeActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        roomDAO.updateUse();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -515,6 +535,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton employee;
     private javax.swing.JButton exitProgram;
     private javax.swing.JButton guestSearch;
+    private javax.swing.JButton jButton1;
     private javax.swing.ButtonGroup jButtonGroupRoomOccupiedUnoccupied;
     private javax.swing.ButtonGroup jButtonGroupRoomStatus;
     private javax.swing.JLabel jLabel1;
