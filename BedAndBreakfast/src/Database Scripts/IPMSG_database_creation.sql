@@ -67,10 +67,11 @@ CREATE TABLE addresses (
 )
 
 DROP TABLE business_dates CASCADE CONTRAINTS;
-CREATE TABLE business_date(
+CREATE TABLE business_dates(
   emp_id  VARCHAR2(10),
   hotel_id VARCHAR2(10),
   business_date DATE,
+  run_date DATE,
   occupied_rooms NUMBER(10),
   total_rooms NUMBER(10),
   PRIMARY KEY (business_date),
@@ -120,8 +121,8 @@ CREATE OR REPLACE FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN
 
       --create a new business date record
       INSERT 
-          INTO business_dates(emp_id, hotel_id, business_date, occupied_rooms, total_rooms)
-          VALUES (employee, hotel, new_business_date, occupied, total);
+          INTO business_dates(emp_id, hotel_id, business_date, run_date, occupied_rooms, total_rooms)
+          VALUES (employee, hotel, new_business_date, SYSDATE, occupied, total);
 
       LOOP
           FETCH res_cursor INTO no_show_res;

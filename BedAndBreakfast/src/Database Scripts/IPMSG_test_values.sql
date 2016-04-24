@@ -149,5 +149,5 @@ select * from guests;
 select * from guests;
 delete from guests where last_name <= 'a';*/
 INSERT ALL
-  INTO business_dates(emp_id, hotel_id, business_date, occupied_rooms, total_rooms) VALUES ('E1100', '001', SYSDATE, 0, 0)
+  INTO business_dates(emp_id, hotel_id, business_date, run_date, occupied_rooms, total_rooms) VALUES ('E1100', '001', '03-APR-16', SYSDATE, 0, 0)
 SELECT * FROM dual;
