@@ -82,38 +82,63 @@ CREATE TABLE business_date(
 
 CREATE OR REPLACE PACKAGE night_audit AS
     FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
-      RETURN BOOLEAN AS
-      new_business_date AS business_dates.business_date%TYPE;
-      business_date AS business_dates.business_date%TYPE;
-      occupied_rooms AS NUMBER;
-      total_rooms AS NUMBER;
-
-      SELECT MAX(business_date) INTO business_date FROM business_dates;
-      SELECT MAX(business_date) + 1 INTO new_business_date FROM business_dates;
-      SELECT COUNT(*) INTO occupied FROM reservations WHERE status = 1;
-      SELECT COUNT(*) INTO total FROM rooms;      
-      CURSOR res_cursor IS SELECT a.res_no, b.use_count,b.rm_no FROM reservations a, rooms b
-        WHERE a.rm_no = b.rm_no AND a.in_date <= business_date AND a.status=0;
-      CURSOR checkedin_cursor IS SELECT res_no FROM reservations WHERE status=1;
-
-      BEGIN
-        --create a new business date record
-        INSERT 
-            INTO busines_dates(emp_id, hotel_id, business_date, occupied_rooms, total_rooms)
-            VALUES (employee, hotel, new_business_date, occupied, total);
-        
-        LOOP
-            FETCH res_cursor INTO no_show_res
-            EXIT WHEN res_cursor%NOTFOUND;
-            --change arrival reservations to no show
-            UPDATE reservations res SET status = 4 WHERE res.res_no = res_cursor.res_no;
-            --add use_count for checked in reservations 
-            UPDATE rooms r SET use_count = r.use_count + 1 
-                WHERE r.rm_no = checkedin_cursor.rm_no;
-        END LOOP;
-      EXCEPTION
-        WHEN DUP_VAL_ON_INDEX THEN
-        RETURN FALSE;
-      RETURN TRUE;
-    END roll_date;
+      RETURN BOOLEAN;
 END night_audit;
+
+CREATE OR REPLACE FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
+  RETURN BOOLEAN AS
+    TYPE no_show_res_type IS RECORD(
+      res_no reservations.res_no%TYPE,
+      use_count rooms.use_count%TYPE,
+      rm_no rooms.rm_no%TYPE
+    );
+    new_business_date business_dates.business_date%TYPE;
+    business_date business_dates.business_date%TYPE;
+    occupied NUMBER;
+    total NUMBER;
+    no_show_res no_show_res_type;
+    checkedin reservations%ROWTYPE;
+    --find the reservations that are due in but have not been checked in
+    CURSOR res_cursor IS SELECT a.res_no, b.use_count,b.rm_no FROM reservations a, rooms b
+      WHERE a.rm_no = b.rm_no AND a.in_date <= business_date AND a.status=0;
+    --find the reservations that are checked in for the room use count incrememnt
+    CURSOR checkedin_cursor IS SELECT * FROM reservations WHERE status=1;
+
+    BEGIN
+      --find the current business date
+      SELECT MAX(business_date) INTO business_date FROM business_dates;
+      --find the new business date
+      SELECT MAX(business_date) + 1 INTO new_business_date FROM business_dates;
+      --find the number of reservations that are checked in
+      SELECT COUNT(*) INTO occupied FROM reservations WHERE status = 1;
+      --find the total number of rooms in the hotel
+      SELECT COUNT(*) INTO total FROM rooms;
+
+      OPEN res_cursor;
+      OPEN checkedin_cursor;
+
+      --create a new business date record
+      INSERT 
+          INTO business_dates(emp_id, hotel_id, business_date, occupied_rooms, total_rooms)
+          VALUES (employee, hotel, new_business_date, occupied, total);
+
+      LOOP
+          FETCH res_cursor INTO no_show_res;
+          EXIT WHEN res_cursor%NOTFOUND;
+          --change arrival reservations to no show
+          UPDATE reservations res SET status = 4 WHERE res.res_no = no_show_res.res_no;
+      END LOOP;
+      LOOP
+        FETCH checkedin_cursor INTO checkedin;
+        EXIT WHEN checkedin_cursor%NOTFOUND;
+        --add use_count for checked in reservations 
+        UPDATE rooms r SET use_count = r.use_count + 1 
+            WHERE r.rm_no = checkedin.rm_no;
+        --change all checked in rooms to dirty
+        UPDATE rooms r SET clean = 1 WHERE r.rm_no = checkedin.rm_no;
+      END LOOP;
+    RETURN TRUE;
+    EXCEPTION
+      WHEN DUP_VAL_ON_INDEX THEN
+      RETURN FALSE;
+END roll_date;
