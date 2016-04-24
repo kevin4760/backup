@@ -81,35 +81,36 @@ CREATE TABLE business_date(
   );
 
 CREATE OR REPLACE PACKAGE night_audit AS
+    new_business_date AS business_dates.business_date%TYPE;
     business_date AS business_dates.business_date%TYPE;
-    --current_date AS business_date.business_date%TYPE;
     occupied_rooms AS NUMBER;
     total_rooms AS NUMBER;
-    --reservations AS reservations%ROWTYPE;
-    TYPE no_show_res_type IS RECORD(
-      res_no AS reservations.res_no%TYPE;
-      use_count AS rooms.use_count%TYPE
-      rm_no AS rooms.rm_no%TYPE;
-    );
 
     FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
       RETURN BOOLEAN AS
-      no_show_res no_show_res_type;
-      SELECT MAX(business_date)+1 INTO business_date FROM business_date;
+
+      SELECT MAX(business_date) INTO business_date FROM business_date;
+      SELECT MAX(business_date) + 1 INTO new_business_date FROM business_date;
+      SELECT COUNT(*) INTO occupied FROM reservations WHERE status = 1;
+      SELECT COUNT(*) INTO total FROM rooms;      
       CURSOR res_cursor IS SELECT a.res_no, b.use_count,b.rm_no FROM reservations a, rooms b
-        WHERE a.rm_no = b.rm_no AND a.in_date <= current_date AND a.status=0;
+        WHERE a.rm_no = b.rm_no AND a.in_date <= business_date AND a.status=0;
+      CURSOR checkedin_cursor IS SELECT res_no FROM reservations WHERE status=1;
 
       BEGIN
-        INSERT INTO busines_dates SET occupSELECT COUNT(*) INTO occupied_rooms FROM reservations WHERE status = 1;
-        SELECT COUNT(*) INTO total_rooms FROM rooms;
-
+        --create a new business date record
+        INSERT 
+            INTO busines_dates(emp_id, hotel_id, business_date, occupied_rooms, total_rooms)
+            VALUES (employee, hotel, new_business_date, occupied, total);
+        
         LOOP
             FETCH res_cursor INTO no_show_res
             EXIT WHEN res_cursor%NOTFOUND;
             --change arrival reservations to no show
-            UPDATE reservations res SET status = 4 WHERE res.res_no = no_show_resv.res_no;
-            --add use_count to 
-UPDATE rooms r SET use_count = no_show_resv.use_count + 1 WHERE r.rm_no = no_show_resv.rm_no;
+            UPDATE reservations res SET status = 4 WHERE res.res_no = res_cursor.res_no;
+            --add use_count for checked in reservations 
+            UPDATE rooms r SET use_count = r.use_count + 1 
+                WHERE r.rm_no = checkedin_cursor.rm_no;
         END LOOP;
       EXCEPTION
         WHEN DUP_VAL_ON_INDEX THEN
