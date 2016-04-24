@@ -7,10 +7,7 @@ package DBCommands;
 
 import java.util.*;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
