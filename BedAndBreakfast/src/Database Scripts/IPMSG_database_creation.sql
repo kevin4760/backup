@@ -80,7 +80,7 @@ CREATE TABLE business_date(
     FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)
   );
 
---being night audit code written by Prasanna
+--begin night audit code written by Prasanna
 CREATE OR REPLACE PACKAGE night_audit AS
     FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
       RETURN BOOLEAN;
@@ -143,3 +143,4 @@ CREATE OR REPLACE FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN
       WHEN DUP_VAL_ON_INDEX THEN
       RETURN FALSE;
 END roll_date;
+--end night audit code
