@@ -42,13 +42,13 @@ public class ReservationManagement extends javax.swing.JFrame {
         jLabeLCheckOutDate = new javax.swing.JLabel();
         jLabelRmNo = new javax.swing.JLabel();
         jLabelResvNo = new javax.swing.JLabel();
-        jComboBoxRoomNumber = new javax.swing.JComboBox<>();
+        jComboBoxRoomNumber = new javax.swing.JComboBox<String>();
         jCalendarComboBoxCheckInDate = new de.wannawork.jcalendar.JCalendarComboBox();
         jCalendarComboBoxCheckOutDate = new de.wannawork.jcalendar.JCalendarComboBox();
         jLabelReservationNumber = new javax.swing.JLabel();
         jTextFieldReservationNumber = new javax.swing.JTextField();
         jLabelStatus = new javax.swing.JLabel();
-        jComboBoxReservationStatus = new javax.swing.JComboBox<>();
+        jComboBoxReservationStatus = new javax.swing.JComboBox<String>();
         jTextFieldGuestNumber = new javax.swing.JTextField();
         jLabelGuestNumber = new javax.swing.JLabel();
         jTextFieldFirstName = new javax.swing.JTextField();
@@ -94,7 +94,7 @@ public class ReservationManagement extends javax.swing.JFrame {
 
         jLabelStatus.setText("Status");
 
-        jComboBoxReservationStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reserved", "Checked In", "Checked Out", "Cancel", "No Show" }));
+        jComboBoxReservationStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Reserved", "Checked In", "Checked Out", "Cancel", "No Show" }));
 
         jTextFieldGuestNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +231,11 @@ public class ReservationManagement extends javax.swing.JFrame {
         jTableReservationTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jButtonSearch.setText("Search");
+        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchActionPerformed(evt);
+            }
+        });
 
         jButtonClear.setText("Clear");
 
@@ -319,6 +324,10 @@ public class ReservationManagement extends javax.swing.JFrame {
     private void jScrollPane1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jScrollPane1PropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1PropertyChange
+
+    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSearchActionPerformed
 
     /**
      * @param args the command line arguments

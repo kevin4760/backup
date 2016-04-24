@@ -23,6 +23,7 @@ public class GuestDAO {
     
     private Statement stmt;
     private ResultSet rs;
+    private PreparedStatement ps;
     
     //connection
     DBConnection gc = new DBConnection();
@@ -95,5 +96,41 @@ public class GuestDAO {
         }
         //Returns the List
         return guestList;       
-    }   
-}
+    }//end guestSearch()   
+    
+    //method guestUpdate()
+    public void updateGuest(Guest guest) {
+        //Gets Database Connection
+        gc.getDBConnection();
+        //Inserts Into Database to Create Guest Try Catch Block
+        try{
+            //Updates information into guests data table
+            ps=gc.getConn()
+                    .prepareStatement("UPDATE guests SET last_name=?, first_name=?, title=? WHERE guest_no=?");
+            ps.setString(1, guest.getLastName());
+            ps.setString(2, guest.getFirstName());
+            ps.setString(3, guest.getTitle());
+            ps.setString(4, guest.getGuestNumber());
+            ps.executeQuery();
+            
+            //Updates information into addresses table
+            ps=gc.getConn()
+                    .prepareStatement("UPDATE addresses SET street=?, city=?, state=?, zip=? WHERE guest_no=?");
+            ps.setString(1, guest.getStreet());
+            ps.setString(2, guest.getCity());
+            ps.setString(3, guest.getState());
+            ps.setString(4, guest.getZipCode());
+            ps.setString(5, guest.getGuestNumber());
+            ps.executeQuery();
+
+            //Conformation Message
+            showMessageDialog(null, "Guest " + guest.getLastName()+ " " + guest.getFirstName() + "has been updated");
+            //Close DB Connection
+            gc.getConn().close();
+        }
+        catch(SQLException ex){
+            Logger.getLogger(GuestDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+}//end class

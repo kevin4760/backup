@@ -11,13 +11,15 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.*;
 import static javax.swing.JOptionPane.showMessageDialog;
+import DBCommands.EmployeeDAO;
 
 /**
  *
  * @author Aaron
  */
 public class LoginPage extends javax.swing.JFrame {
-
+    
+    EmployeeDAO emp = new EmployeeDAO();
     /**
      * Creates new form Login
      */
@@ -140,10 +142,9 @@ public class LoginPage extends javax.swing.JFrame {
         // validates username and password moves to reservation screen
         DBConnection gc = new DBConnection();
         gc.getDBConnection();
-        //System.out.println(gc.validateUser(username.getText(), password.getText()));
-        if(gc.validateUser(username.getText(), password.getPassword())){
+        if(emp.validateUser(username.getText(), password.getPassword())){
             new Dashboard().setVisible(rootPaneCheckingEnabled);
-            this.setVisible(false);
+            this.dispose();
         } else{
             showMessageDialog(null, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
         }

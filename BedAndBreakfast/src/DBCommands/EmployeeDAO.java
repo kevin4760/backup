@@ -139,4 +139,28 @@ public class EmployeeDAO {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);  
         }
     }
+    
+    //vaidate user for login   
+    //method validateUser()
+    public Boolean validateUser(String user, char[] input) {
+        gc.getDBConnection();
+        String pass = new String(input);
+        Boolean access = false;
+        try {
+            String sql = "SELECT * FROM employees WHERE user_name='" + user + 
+                "' and password='" + pass +"'";
+            stmt = gc.getConn().createStatement();
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                access = true;
+                rs.close();
+            } else 
+                access = false;
+            rs.close();
+            gc.getConn().close();
+        } catch(SQLException ex) {
+            System.out.println(ex);
+        }
+        return access;        
+    }
 }
