@@ -81,16 +81,15 @@ CREATE TABLE business_date(
   );
 
 CREATE OR REPLACE PACKAGE night_audit AS
-    new_business_date AS business_dates.business_date%TYPE;
-    business_date AS business_dates.business_date%TYPE;
-    occupied_rooms AS NUMBER;
-    total_rooms AS NUMBER;
-
     FUNCTION roll_date(employee IN employees.emp_id%TYPE, hotel IN hotels.hotel_id%TYPE) 
       RETURN BOOLEAN AS
+      new_business_date AS business_dates.business_date%TYPE;
+      business_date AS business_dates.business_date%TYPE;
+      occupied_rooms AS NUMBER;
+      total_rooms AS NUMBER;
 
-      SELECT MAX(business_date) INTO business_date FROM business_date;
-      SELECT MAX(business_date) + 1 INTO new_business_date FROM business_date;
+      SELECT MAX(business_date) INTO business_date FROM business_dates;
+      SELECT MAX(business_date) + 1 INTO new_business_date FROM business_dates;
       SELECT COUNT(*) INTO occupied FROM reservations WHERE status = 1;
       SELECT COUNT(*) INTO total FROM rooms;      
       CURSOR res_cursor IS SELECT a.res_no, b.use_count,b.rm_no FROM reservations a, rooms b
