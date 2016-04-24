@@ -68,6 +68,14 @@ public class ReservationDAO {
             gc.getConn().close();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //catch unique guest_no constraint and offers to create guest
+            if(ex.getSQLState().startsWith("23")) {
+                int dialogResults = JOptionPane.showConfirmDialog(null, "Guest not found.  Create Guest?", "Invalid Guest No", JOptionPane.YES_NO_OPTION);
+                //create guest if yes
+                if(dialogResults == 0) {
+                    new views.GuestSearchModule().setVisible(true);
+                }
+            }
         }
     }//end insertReservation()
     
